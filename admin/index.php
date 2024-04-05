@@ -31,6 +31,7 @@ if($user && $pass) {
     if(!$loggedin) {
         echo '
         <form action="./index.php" method="POST">
+            <h2>Log in</h2>
             <input type="text" name="user" placeholder="username">
             <input type="text" name="pass" placeholder="password">
             <button type="submit">Log in</button>
