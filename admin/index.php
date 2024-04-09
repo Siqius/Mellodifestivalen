@@ -8,11 +8,29 @@ if(!empty(isset($_POST["user"]))) {
     $user = $_POST["user"];
 }
 if(!empty(isset($_POST["pass"]))) {
-    $user = $_POST["pass"];
+    $pass = $_POST["pass"];
 }
-
 if($user && $pass) {
-    //make sqli statement
+    $mysqli = new mysqli("localhost", "root", "", "melodifestivalen");
+    if($mysqli === false){
+        die("ERROR: Could not connect. " . $mysqli->connect_error);
+    }
+
+    # Set the charset to utf8, create a prepared statement and execute it, we use prepared statements to avoid SQL injections
+    $mysqli->set_charset("utf8");
+
+    $SQLquery = "SELECT ID FROM admin WHERE user=? AND pass=?";
+
+    $stmt = $mysqli->prepare($SQLquery);
+
+    $stmt->bind_param("ss",$user,$pass);
+
+    $stmt->execute();
+
+    $ID = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)[0];
+    if(!empty($ID["ID"])) {
+        $loggedin = true;
+    } 
 }
 
 ?>
@@ -30,7 +48,7 @@ if($user && $pass) {
     <?php 
     if(!$loggedin) {
         echo '
-        <form action="./index.php" method="POST">
+        <form action="./" method="POST">
             <h2>Log in</h2>
             <input type="text" name="user" placeholder="username">
             <input type="text" name="pass" placeholder="password">
