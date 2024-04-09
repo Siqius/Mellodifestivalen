@@ -32,6 +32,11 @@ async function addContender() {
         alert(`Deltävling "${contest}" existerar inte (1-3).`)
     }
 
-    const response = await fetchData("../admin/handleRequests.php/", {artistname: artistname, songname: songname, songurl: songurl, artistbackground: artistbackground, contest: contest});
+    const response = await fetchData("../admin/handleRequests.php/", {artistname: artistname, songname: songname, songurl: songurl, artistbackground: artistbackground, contest: contest, addcontender: true});
     console.log(response);
+}
+
+async function retrieveContest(contest) {
+    const response = await fetchData("../admin/handleRequests.php/", {retrievecontest: true, contest: contest});
+    console.log(JSON.parse(response));
 }

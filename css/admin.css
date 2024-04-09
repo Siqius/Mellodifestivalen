@@ -5,7 +5,7 @@
 body {
     display:flex;
     gap:10%;
-    flex-direction: row;
+    flex-direction: column;
     width:100vw;
     height:100vh;
     overflow-x: hidden;
@@ -17,6 +17,19 @@ body {
     width:20%;
     height:100%;
     border-right:2px solid gray;
+}
+#selectcontest {
+    padding-left:5px;
+    position: fixed;
+    top:40%;
+    width:20%;
+    height:100%;
+    border-right:2px solid gray;
+}
+#selectcontest button {
+    width:24%;
+    aspect-ratio: 1/1;
+    font-size:90%;
 }
 input {
     height:4%;
