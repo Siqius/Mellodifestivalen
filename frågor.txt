@@ -1,13 +1,7 @@
 -----frågor till lärare------
 skriva:
-"SELECT ID FROM artist WHERE name=?";
-"SELECT votes FROM bidrag WHERE ID=?";
-enklare sätt??
-(SELECT a.ID, b.votes
-FROM artist a
-JOIN bidrag b ON a.ID = b.ID
-WHERE a.name = ?;
-????)
+DELETE FROM bidrag, artist, song WHERE ID=?
+går det? ifall inte, hur kan man göra det då?
 
 måste användaren trycka på "acceptera cookies/localstorage" för att kunna rösta (måste det finnas en "accept cookies/localstorage" knapp)?
 

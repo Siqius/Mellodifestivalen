@@ -17,7 +17,7 @@ if(!empty(isset($data["addcontender"]))) {
 
     $stmt = $mysqli->prepare($SQLquery);
 
-    $votes = 0;
+    $votes = (int)$data["votes"];
     $stmt->bind_param("ii",$votes,$data["contest"]);
 
     $stmt->execute();

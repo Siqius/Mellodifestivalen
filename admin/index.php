@@ -55,7 +55,9 @@ if($user && $pass) {
             <button type="submit">Log in</button>
         </form>';
     }else {
-
+        echo '
+        <div id="sidebar">
+        ';
         echo '
         <div id="createcontender">
             <h2>Lägg till bidrag</h2><br>
@@ -64,6 +66,7 @@ if($user && $pass) {
             <input type="text" name="songurl" placeholder="Låt url"><br>
             <input type="text" name="artistbackground" placeholder="Artist bakgrund"><br>
             <input type="text" name="contest" placeholder="Deltävling"><br>
+            <input type="text" name="votes" placeholder="Röster"><br>
             <button type="button" onclick="addContender()">Lägg till</button>
         </div>
         ';
@@ -77,7 +80,18 @@ if($user && $pass) {
             <button type="button" onclick="retrieveContest(4)">Deltävling 4</button>
         </div>
         ';
+        echo '
+        </div>
+        ';
 
+        echo '
+        <div id="content">
+            <div>a</div>
+            <div>a</div>
+            <div>a</div>
+            <div>a</div>
+        </div>
+        ';
     }
 
     ?>
