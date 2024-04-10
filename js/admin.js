@@ -34,7 +34,6 @@ async function addContender() {
     }
 
     const response = await fetchData("../admin/handleRequests.php/", {artistname: artistname, songname: songname, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
-    console.log(response);
 }
 
 async function retrieveContest(contest) {
@@ -53,17 +52,14 @@ async function retrieveContest(contest) {
         background.innerHTML = contest["background"];
         let votes = document.createElement("h3");
         votes.innerHTML = contest["votes"];
-        let video = document.createElement("iframe");
-        video.referrerPolicy = "no-referrer-when-downgrade";
-        video.src = 'https://www.youtube.com/watch?v=rZahRB65BfY';
-        video.title = contest["songname"];
+        let video = document.createElement("video");
+        video.type = "video/mp4";
+        video.src = contest["url"];
         wrapper.appendChild(artistname);
         wrapper.appendChild(songname);
         wrapper.appendChild(background);
         wrapper.appendChild(votes);
         wrapper.appendChild(video);
         body.appendChild(wrapper);
-        console.log("Done?")
     })
-    
 }
