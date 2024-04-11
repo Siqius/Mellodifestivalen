@@ -52,14 +52,13 @@ async function retrieveContest(contest) {
         background.innerHTML = contest["background"];
         let votes = document.createElement("h3");
         votes.innerHTML = contest["votes"];
-        let video = document.createElement("video");
-        video.type = "video/mp4";
-        video.src = contest["url"];
+        let songurl = document.createElement("h3");
+        songurl.innerHTML = contest["url"];
         wrapper.appendChild(artistname);
         wrapper.appendChild(songname);
         wrapper.appendChild(background);
         wrapper.appendChild(votes);
-        wrapper.appendChild(video);
+        wrapper.appendChild(songurl);
         body.appendChild(wrapper);
     })
 }

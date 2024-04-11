@@ -86,7 +86,7 @@ if($user && $pass) {
 
         echo '
         <div id="content">
-        
+            
         </div>
         ';
     }
