@@ -1,7 +1,11 @@
 #header{
-    height: 100px;
-    width: 100px;
-    background-color: black;
+    .header {
+        padding: 60px;
+        text-align: center;
+        background: black;
+        color: white;
+        font-size: 30px;
+      }
 }
 
 h1{
