@@ -19,7 +19,7 @@ body {
     border-right:2px solid gray;
 }
 #selectcontest {
-    margin-top:5%;
+    margin-top:20%;
     padding-left:5px;
     position: fixed;
     top:40%;
@@ -59,15 +59,18 @@ h2 {
     margin-left:25%;
     display:grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: auto;
+    grid-auto-rows: calc(auto);
     overflow-y: scroll;
     overflow-x:hidden;
     width:60%;
     height:100%;
     div {
+        margin-top:10%;
         width:90%;
         height: fit-content;
-        border: 5px solid black
+        border-image: linear-gradient(#09aae0, #82509f, #eb3791, #d6098b, #f95a28, #ff9f00) 30;
+        border-width: 10px;
+        border-style: solid;
     }
 }
 video {

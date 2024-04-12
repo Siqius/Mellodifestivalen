@@ -1,3 +1,12 @@
+const height = document.body.clientHeight;
+const width = document.body.clientWidth;
+
+if(height > width) {
+    console.log("true");
+    let content = document.querySelector("#content");
+    content.style.gridTemplateColumns = "1fr";
+}
+
 async function fetchData(fetchUrl, objectToSend) {
     try {
         let response = await fetch(fetchUrl, {
@@ -36,6 +45,11 @@ async function addContender() {
     const response = await fetchData("../admin/handleRequests.php/", {artistname: artistname, songname: songname, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
 }
 
+async function deleteContender(ID, contest) {
+    const response = await fetchData("../admin/handleRequests.php/", {deletecontender: true, ID:ID})
+    if(response == "SUCCESS") retrieveContest(contest)
+}
+
 async function retrieveContest(contest) {
     let response = await fetchData("../admin/handleRequests.php/", {retrievecontest: true, contest: contest});
     response = JSON.parse(response);
@@ -52,13 +66,25 @@ async function retrieveContest(contest) {
         background.innerHTML = contest["background"];
         let votes = document.createElement("h3");
         votes.innerHTML = contest["votes"];
-        let songurl = document.createElement("h3");
-        songurl.innerHTML = contest["url"];
+        let video = document.createElement("iframe");
+        video.type = "video/mp4";
+        video.src = "https://youtube.com/embed/" + contest["url"].split("=")[1].split("&")[0];
+        video.title = contest["songname"];
+        video.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; web-share";
+        video.referrerPolicy = "strict-origin-when-cross-origin";
+        video.allowFullscreen = true;
+        let button = document.createElement("button");
+        button.onclick = function() {
+            deleteContender(contest["ID"], contest["contest"]);
+        }
+        
+        button.innerHTML = "Ta bort bidrag";
         wrapper.appendChild(artistname);
         wrapper.appendChild(songname);
         wrapper.appendChild(background);
         wrapper.appendChild(votes);
-        wrapper.appendChild(songurl);
+        wrapper.appendChild(video);
+        wrapper.appendChild(button);
         body.appendChild(wrapper);
     })
 }

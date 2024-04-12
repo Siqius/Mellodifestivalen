@@ -74,10 +74,10 @@ if($user && $pass) {
         echo '
         <div id="selectcontest">
             <h2>Välj deltävling</h2><br>
-            <button type="button" onclick="retrieveContest(1)">Deltävling 1</button>
-            <button type="button" onclick="retrieveContest(2)">Deltävling 2</button>
-            <button type="button" onclick="retrieveContest(3)">Deltävling 3</button>
-            <button type="button" onclick="retrieveContest(4)">Deltävling 4</button>
+            <button type="button" onclick="retrieveContest(1)">1</button>
+            <button type="button" onclick="retrieveContest(2)">2</button>
+            <button type="button" onclick="retrieveContest(3)">3</button>
+            <button type="button" onclick="retrieveContest(4)">4</button>
         </div>
         ';
         echo '

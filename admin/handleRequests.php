@@ -56,17 +56,39 @@ if(!empty(isset($data["deletecontender"]))) {
     # Set the charset to utf8, create a prepared statement and execute it, we use prepared statements to avoid SQL injections
     $mysqli->set_charset("utf8");
 
-    $SQLquery = "DELETE FROM bidrag, artist, song WHERE ID=?";
+    $SQLquery = "DELETE FROM bidrag WHERE ID=?";
 
     $stmt = $mysqli->prepare($SQLquery);
 
-    $stmt->bind_param("i",$data["deletecontender"]);
+    $stmt->bind_param("i",$data["ID"]);
+
+    $stmt->execute();
+
+    $stmt->close();
+
+    $SQLquery = "DELETE FROM artist WHERE ID=?";
+
+    $stmt = $mysqli->prepare($SQLquery);
+
+    $stmt->bind_param("i",$data["ID"]);
+
+    $stmt->execute();
+
+    $stmt->close();
+
+    $SQLquery = "DELETE FROM song WHERE ID=?";
+
+    $stmt = $mysqli->prepare($SQLquery);
+
+    $stmt->bind_param("i",$data["ID"]);
 
     $stmt->execute();
 
     $stmt->close();
 
     $mysqli->close();
+
+    echo "SUCCESS";
 }
 
 if(!empty(isset($data["retrievecontest"]))) {
