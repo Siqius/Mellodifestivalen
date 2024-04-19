@@ -1,6 +1,7 @@
 * {
     margin:0;
     padding:0;
+    color:white;
 }
 body {
     display:flex;
@@ -9,6 +10,7 @@ body {
     width:100vw;
     height:100vh;
     overflow-x: hidden;
+    background-color:black;
 }
 #createcontender {
     padding-left:5px;
@@ -16,27 +18,42 @@ body {
     top:0;
     width:20%;
     height:100%;
-    border-right:2px solid gray;
+    border-right:2px solid rgb(82, 82, 82);
+    button {
+        width:90%;
+        aspect-ratio:1/0.2;
+        background-color:rgb(82, 82, 82);
+    }
 }
 #selectcontest {
-    margin-top:20%;
     padding-left:5px;
     position: fixed;
-    top:40%;
+    top:50%;
     width:20%;
     height:100%;
-    border-right:2px solid gray;
-}
-#selectcontest button {
-    width:23%;
-    aspect-ratio: 1/1;
-    font-size:90%;
+    border-right:2px solid rgb(82, 82, 82);
+    button {
+        width:23%;
+        aspect-ratio: 1/1;
+        font-size:90%;
+        background-color:rgb(82, 82, 82);
+    }
 }
 input {
     height:4%;
     margin-bottom:10px;
     width:90%;
     font-size:100%;
+    background-color:rgb(82, 82, 82);
+    color:white;
+}
+::placeholder {
+    color: white;
+    opacity: 0.5;
+  }
+  
+::-ms-input-placeholder {
+    color: white;
 }
 form {
     margin-top:1%;
@@ -45,36 +62,134 @@ form {
     input {
         width: 40%;
         aspect-ratio: 1/2;
-        font-size:300%;
+        font-size:200%;
     }
     button {
         width:40%;
         aspect-ratio: 1/0.1;
+        background-color:rgb(82,82,82);
+        font-size:200%;
     }
 }
 h2 {
-    font-size:100%;
+    font-size:200%;
+    color:white;
 }
 #content {
+    justify-content: center;
     margin-left:25%;
     display:grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: calc(auto);
     overflow-y: scroll;
     overflow-x:hidden;
-    width:60%;
+    width:75%;
     height:100%;
-    div {
+    div:not(.loading) {
         margin-top:10%;
         width:90%;
         height: fit-content;
         border-image: linear-gradient(#09aae0, #82509f, #eb3791, #d6098b, #f95a28, #ff9f00) 30;
         border-width: 10px;
         border-style: solid;
+        button {
+            background-color: rgb(82, 82, 82);
+        }
     }
 }
-video {
+.whileloading {
+    position: absolute;
+    right:-1500px;
+}
+iframe {
     width:90%;
     margin-left:5%;
     margin-right:5%;
+}
+.loading {
+    --speed-of-animation: 2s;
+    --first-color: #09aae0;
+    --second-color: #82509f;
+    --third-color: #eb3791;
+    --fourth-color: #d6098b;
+    --fifth-color: #f95a28;
+    --sixth-color: #ff9f00;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.loading span {
+    width: 20px;
+    height: 300px;
+    background: var(--first-color);
+    animation: scale var(--speed-of-animation) ease-in-out infinite;
+}
+
+.loading span:nth-child(2) {
+    background: var(--second-color);
+    animation-delay: -1.8s;
+}
+
+.loading span:nth-child(3) {
+    background: var(--third-color);
+    animation-delay: -1.6s;
+}
+
+.loading span:nth-child(4) {
+    background: var(--fourth-color);
+    animation-delay: -1.4s;
+}
+
+.loading span:nth-child(5) {
+    background: var(--fifth-color);
+    animation-delay: -1.2s;
+}
+
+.loading span:nth-child(6) {
+    background: var(--sixth-color);
+    animation-delay: -1s;
+}
+
+html {
+    scrollbar-face-color: #646464;
+    scrollbar-base-color: #646464;
+    scrollbar-3dlight-color: #646464;
+    scrollbar-highlight-color: #646464;
+    scrollbar-track-color: #000;
+    scrollbar-arrow-color: #000;
+    scrollbar-shadow-color: #646464;
+    scrollbar-darkshadow-color: #646464;
+}
+  
+  ::-webkit-scrollbar { width: 8px; height: 3px;}
+  ::-webkit-scrollbar-track {  background-color: #646464;}
+  ::-webkit-scrollbar-track-piece { background-color: #000;}
+  ::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
+  ::-webkit-scrollbar-corner { background-color: #646464;}
+  ::-webkit-resizer { background-color: #666;}
+
+@keyframes scale {
+    0%, 40%, 100% {
+        transform: scaleY(0.05);
+    }
+    
+    20% {
+        transform: scaleY(1);
+    }
+}
+@media only screen and (max-width:600px) {
+    h2 {
+        font-size:100%;
+    }
+    #content {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    #selectcontest button {
+        width:45%;
+    }
+    #createcontender input {
+        font-size:60%;
+    }
 }

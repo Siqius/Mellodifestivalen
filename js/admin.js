@@ -1,12 +1,3 @@
-const height = document.body.clientHeight;
-const width = document.body.clientWidth;
-
-if(height > width) {
-    console.log("true");
-    let content = document.querySelector("#content");
-    content.style.gridTemplateColumns = "1fr";
-}
-
 async function fetchData(fetchUrl, objectToSend) {
     try {
         let response = await fetch(fetchUrl, {
@@ -38,24 +29,49 @@ async function addContender() {
         alert("Var vänlig fyll i alla rutor.");
         return;
     }
+    try {
+        let url = songurl.split("=")[1];
+        if(url.indexOf("&") != -1) {
+            url = url.split("&")[0];
+        }
+    } catch(error) {
+        alert("Invalid länk, kopiera youtube url vid adressfält");
+        return;
+    }
     if(contest != "1" && contest != "2" && contest != "3") {
-        alert(`Deltävling "${contest}" existerar inte (1-3).`)
+        alert(`Deltävling "${contest}" existerar inte (1-3).`);
     }
 
     const response = await fetchData("../admin/handleRequests.php/", {artistname: artistname, songname: songname, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
+    retrieveContest(parseInt(contest));
 }
 
 async function deleteContender(ID, contest) {
-    const response = await fetchData("../admin/handleRequests.php/", {deletecontender: true, ID:ID})
-    if(response == "SUCCESS") retrieveContest(contest)
+    const response = await fetchData("../admin/handleRequests.php/", {deletecontender: true, ID:ID});
+    if(response == "SUCCESS") retrieveContest(contest, remove = true);
 }
 
-async function retrieveContest(contest) {
+async function retrieveContest(contest, remove = false) {
     let response = await fetchData("../admin/handleRequests.php/", {retrievecontest: true, contest: contest});
     response = JSON.parse(response);
-    console.log(response);
     let body = document.querySelector("#content");
     body.innerHTML = "";
+    let loadingdiv = document.createElement("div");
+    loadingdiv.classList.add("loading");
+    for(let i = 0; i < 6; i++) {
+        let loadingspan = document.createElement("span");
+        loadingdiv.appendChild(loadingspan);
+    }
+    body.appendChild(loadingdiv);
+    document.querySelector(".loading").style.display = "flex";
+    setTimeout(() => {
+        let wrappers = [...document.querySelectorAll(".whileloading")];
+        document.querySelector(".loading").style.display = "none";
+        wrappers.forEach((div) => {
+            div.classList.remove("whileloading")
+        })
+    },5000)
+    
     response.forEach(contest => {
         let wrapper = document.createElement("div");
         let artistname = document.createElement("h1");
@@ -65,7 +81,7 @@ async function retrieveContest(contest) {
         let background = document.createElement("h3");
         background.innerHTML = contest["background"];
         let votes = document.createElement("h3");
-        votes.innerHTML = contest["votes"];
+        votes.innerHTML = `${contest["votes"]} röster`;
         let video = document.createElement("iframe");
         video.type = "video/mp4";
         video.src = "https://youtube.com/embed/" + contest["url"].split("=")[1].split("&")[0];
@@ -77,7 +93,6 @@ async function retrieveContest(contest) {
         button.onclick = function() {
             deleteContender(contest["ID"], contest["contest"]);
         }
-        
         button.innerHTML = "Ta bort bidrag";
         wrapper.appendChild(artistname);
         wrapper.appendChild(songname);
@@ -85,6 +100,7 @@ async function retrieveContest(contest) {
         wrapper.appendChild(votes);
         wrapper.appendChild(video);
         wrapper.appendChild(button);
+        wrapper.classList.add("whileloading");
         body.appendChild(wrapper);
     })
 }
