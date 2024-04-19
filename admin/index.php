@@ -86,14 +86,7 @@ if($user && $pass) {
 
         echo '
         <div id="content">
-            <div class="loading">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            
         </div>
         ';
     }
