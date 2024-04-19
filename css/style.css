@@ -6,13 +6,21 @@ header{
     width:  100%;
     height: 25%;
     background: linear-gradient(90deg, #09aae0, #82509f, #eb3791, #d6098b, #f95a28, #ff9f00 );
+    display: flex;
+
+    img {
+        height:100%;
+        aspect-ratio: 1/1;
+    }
+
 }
 h1 {
     text-align: center;
     color:  white;
-    padding-top: 40px;
+    padding-top: 3%;
     font-size: 400%;
-}
+    margin-left: 20%;
+
         
 }
 body {
@@ -21,6 +29,14 @@ body {
     background-color: black;
 }
 
-image{
+main{
+    width: 80%;
+    background-color: white;
+    margin-left: 10%;
+    margin-right: 10%;
+}
 
+#content{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
