@@ -21,11 +21,12 @@ async function fetchData(fetchUrl, objectToSend) {
 async function addContender() {
     let artistname = document.querySelector("input[name='artistname']").value;
     let songname = document.querySelector("input[name='songname']").value;
+    let artistimage = document.querySelector("input[name='artistimage']").value;
     let songurl = document.querySelector("input[name='songurl']").value;
     let artistbackground = document.querySelector("input[name='artistbackground']").value;
     let contest = document.querySelector("input[name='contest']").value;
     let votes = document.querySelector("input[name='votes']").value;
-    if(artistname == "" || songname == "" || songurl == "" || artistbackground == "" || contest == "" || votes == "") {
+    if(artistname == "" || songname == "" || artistimage == "" || songurl == "" || artistbackground == "" || contest == "" || votes == "") {
         alert("Var vänlig fyll i alla rutor.");
         return;
     }
@@ -42,7 +43,7 @@ async function addContender() {
         alert(`Deltävling "${contest}" existerar inte (1-3).`);
     }
 
-    const response = await fetchData("../admin/handleRequests.php/", {artistname: artistname, songname: songname, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
+    const response = await fetchData("../admin/handleRequests.php/", {artistname: artistname, songname: songname, artistimage:artistimage, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
     retrieveContest(parseInt(contest));
 }
 
@@ -94,11 +95,15 @@ async function retrieveContest(contest, remove = false) {
             deleteContender(contest["ID"], contest["contest"]);
         }
         button.innerHTML = "Ta bort bidrag";
+        let image = document.createElement("img");
+        image.src = contest["image"];
+        console.log(image);
         wrapper.appendChild(artistname);
         wrapper.appendChild(songname);
         wrapper.appendChild(background);
         wrapper.appendChild(votes);
         wrapper.appendChild(video);
+        wrapper.appendChild(image)
         wrapper.appendChild(button);
         wrapper.classList.add("whileloading");
         body.appendChild(wrapper);

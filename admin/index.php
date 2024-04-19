@@ -63,6 +63,7 @@ if($user && $pass) {
             <h2>Lägg till bidrag</h2><br>
             <input type="text" name="artistname" placeholder="Artist namn"><br>
             <input type="text" name="songname" placeholder="Låt namn"><br>
+            <input type="text" name="artistimage" placeholder="Imgur länk på artisten"><br>
             <input type="text" name="songurl" placeholder="Låt url"><br>
             <input type="text" name="artistbackground" placeholder="Artist bakgrund"><br>
             <input type="text" name="contest" placeholder="Deltävling"><br>

@@ -24,11 +24,11 @@ if(!empty(isset($data["addcontender"]))) {
 
     $stmt->close();
 
-    $SQLquery = "INSERT INTO artist(artistname,background) VALUES(?,?)";
+    $SQLquery = "INSERT INTO artist(artistname,background,image) VALUES(?,?,?)";
 
     $stmt = $mysqli->prepare($SQLquery);
 
-    $stmt->bind_param("ss",$data["artistname"],$data["artistbackground"]);
+    $stmt->bind_param("sss",$data["artistname"],$data["artistbackground"],$data["artistimage"]);
 
     $stmt->execute();
 
