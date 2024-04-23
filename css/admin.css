@@ -56,17 +56,29 @@ input {
     color: white;
 }
 form {
-    margin-top:1%;
+    height:40%;
+    width:40%;
+    padding:5%;
+    margin:10% 0% 0% 25%;
     display:flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-image: linear-gradient(#09aae0, #82509f, #eb3791, #d6098b, #f95a28, #ff9f00) 30;
+    border-width: 3%;
+    border-style: solid;
+    border-radius:1000px;
+    h2 {
+        font-size:350%;
+    }
     input {
-        width: 40%;
-        aspect-ratio: 1/2;
+        width: 80%;
+        height:25%;
         font-size:200%;
     }
     button {
         width:40%;
-        aspect-ratio: 1/0.1;
+        aspect-ratio: 1/0.3;
         background-color:rgb(82,82,82);
         font-size:200%;
     }
@@ -85,7 +97,7 @@ h2 {
     overflow-x:hidden;
     width:75%;
     height:100%;
-    div:not(.loading) {
+    div:not(.loadingdiv) {
         margin-top:10%;
         width:90%;
         height: fit-content;

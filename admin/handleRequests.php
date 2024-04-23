@@ -8,13 +8,15 @@ $mysql_database = "melodifestivalen";
 $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 if(str_contains($url, 'afa-mello')) {
-    $mysql_host = "localhost";
-    $mysql_user = "ntigskov_afa-mello";
-    $mysql_password = "q8GyQyP;a~nN";
-    $mysql_database = "ntigskov_afa-mello";
+    include './credentials.php';
 }
-
+$input = $_POST;
+print_r($input);
+print_r($_GET);
+print_r($_REQUEST);
+/*
 $input = file_get_contents('php://input');
+
 
 $data = json_decode($input,true);
 
@@ -131,3 +133,4 @@ if(!empty(isset($data["retrievecontest"]))) {
     echo json_encode($result);
 }
 ?>
+*/

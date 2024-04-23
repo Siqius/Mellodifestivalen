@@ -60,7 +60,6 @@ if($user && $pass) {
 </head>
 <body>
     <?php 
-    echo $url;
     if(!$loggedin) {
         echo '
         <form action="./" method="POST">
@@ -68,7 +67,8 @@ if($user && $pass) {
             <input type="text" name="user" placeholder="username">
             <input type="text" name="pass" placeholder="password">
             <button type="submit">Log in</button>
-        </form>';
+        </form>
+        ';
     }else {
         echo '
         <div id="sidebar">
