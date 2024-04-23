@@ -1,11 +1,25 @@
 <?php 
 
+$mysql_host = "localhost";
+$mysql_user = "root";
+$mysql_password = "";
+$mysql_database = "melodifestivalen";
+
+$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+if(str_contains($url, 'afa-mello')) {
+    $mysql_host = "localhost";
+    $mysql_user = "ntigskov_afa-mello";
+    $mysql_password = "q8GyQyP;a~nN";
+    $mysql_database = "ntigskov_afa-mello";
+}
+
 $input = file_get_contents('php://input');
 
 $data = json_decode($input,true);
 
 if(!empty(isset($data["addcontender"]))) {
-    $mysqli = new mysqli("localhost", "root", "", "melodifestivalen");
+    $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
     if($mysqli === false){
         die("ERROR: Could not connect. " . $mysqli->connect_error);
     }
@@ -48,7 +62,7 @@ if(!empty(isset($data["addcontender"]))) {
 }
 
 if(!empty(isset($data["deletecontender"]))) {
-    $mysqli = new mysqli("localhost", "root", "", "melodifestivalen");
+    $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
     if($mysqli === false){
         die("ERROR: Could not connect. " . $mysqli->connect_error);
     }
@@ -92,7 +106,7 @@ if(!empty(isset($data["deletecontender"]))) {
 }
 
 if(!empty(isset($data["retrievecontest"]))) {
-    $mysqli = new mysqli("localhost", "root", "", "melodifestivalen");
+    $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
     if($mysqli === false){
         die("ERROR: Could not connect. " . $mysqli->connect_error);
     }
