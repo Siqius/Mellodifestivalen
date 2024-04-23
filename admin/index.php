@@ -4,6 +4,20 @@ $loggedin = false;
 $user = "";
 $pass = "";
 
+$mysql_host = "localhost";
+$mysql_user = "root";
+$mysql_password = "";
+$mysql_database = "melodifestivalen";
+
+$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+if(str_contains($url, 'afa-mello')) {
+    $mysql_host = "localhost";
+    $mysql_user = "ntigskov_afa-mello";
+    $mysql_password = "q8GyQyP;a~nN";
+    $mysql_database = "ntigskov_afa-mello";
+}
+
 if(!empty(isset($_POST["user"]))) {
     $user = $_POST["user"];
 }
@@ -11,7 +25,7 @@ if(!empty(isset($_POST["pass"]))) {
     $pass = $_POST["pass"];
 }
 if($user && $pass) {
-    $mysqli = new mysqli("localhost", "root", "", "melodifestivalen");
+    $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
     if($mysqli === false){
         die("ERROR: Could not connect. " . $mysqli->connect_error);
     }
@@ -53,7 +67,8 @@ if($user && $pass) {
             <input type="text" name="user" placeholder="username">
             <input type="text" name="pass" placeholder="password">
             <button type="submit">Log in</button>
-        </form>';
+        </form>
+        ';
     }else {
         echo '
         <div id="sidebar">

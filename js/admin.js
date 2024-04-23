@@ -10,7 +10,8 @@ async function fetchData(fetchUrl, objectToSend) {
         }
 
         const resultFromPHP = await response.text();
-        // Process or use the resultFromPHP as needed
+        console.log(resultFromPHP);
+
         return resultFromPHP;
 
     } catch (error) {
@@ -43,17 +44,17 @@ async function addContender() {
         alert(`Deltävling "${contest}" existerar inte (1-3).`);
     }
 
-    const response = await fetchData("../admin/handleRequests.php/", {artistname: artistname, songname: songname, artistimage:artistimage, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
+    const response = await fetchData("../admin/handlerequests.php/", {artistname: artistname, songname: songname, artistimage:artistimage, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
     retrieveContest(parseInt(contest));
 }
 
 async function deleteContender(ID, contest) {
-    const response = await fetchData("../admin/handleRequests.php/", {deletecontender: true, ID:ID});
+    const response = await fetchData("../admin/handlerequests.php/", {deletecontender: true, ID:ID});
     if(response == "SUCCESS") retrieveContest(contest, remove = true);
 }
 
 async function retrieveContest(contest, remove = false) {
-    let response = await fetchData("../admin/handleRequests.php/", {retrievecontest: true, contest: contest});
+    let response = await fetchData("../admin/handlerequests.php/", {retrievecontest: true, contest: contest});
     response = JSON.parse(response);
     let body = document.querySelector("#content");
     body.innerHTML = "";
