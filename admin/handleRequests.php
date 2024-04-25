@@ -10,15 +10,7 @@ $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_
 if(str_contains($url, 'afa-mello')) {
     include './credentials.php';
 }
-$input = $_POST;
-print_r($input);
-print_r($_GET);
-print_r($_REQUEST);
-/*
-$input = file_get_contents('php://input');
-
-
-$data = json_decode($input,true);
+$data = $_POST;
 
 if(!empty(isset($data["addcontender"]))) {
     $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
@@ -133,4 +125,3 @@ if(!empty(isset($data["retrievecontest"]))) {
     echo json_encode($result);
 }
 ?>
-*/
