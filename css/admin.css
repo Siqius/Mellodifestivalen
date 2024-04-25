@@ -97,7 +97,7 @@ h2 {
     overflow-x:hidden;
     width:75%;
     height:100%;
-    div:not(.loadingdiv) {
+    div:not(.loading) {
         margin-top:10%;
         width:90%;
         height: fit-content;

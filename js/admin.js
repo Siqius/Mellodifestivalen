@@ -1,8 +1,13 @@
 async function fetchData(fetchUrl, objectToSend) {
     try {
+        let formData = new FormData();
+        for (let key in objectToSend) {
+            formData.append(key, objectToSend[key]);
+        }
+
         let response = await fetch(fetchUrl, {
             method: "POST",
-            body: JSON.stringify(objectToSend)
+            body: formData
         });
 
         if (!response.ok) {
@@ -65,10 +70,12 @@ async function retrieveContest(contest, remove = false) {
         loadingdiv.appendChild(loadingspan);
     }
     body.appendChild(loadingdiv);
+    body.style.gridTemplateColumns = "1fr";
     document.querySelector(".loading").style.display = "flex";
     setTimeout(() => {
         let wrappers = [...document.querySelectorAll(".whileloading")];
         document.querySelector(".loading").style.display = "none";
+        body.style.gridTemplateColumns = "repeat(2, 1fr)";
         wrappers.forEach((div) => {
             div.classList.remove("whileloading")
         })
