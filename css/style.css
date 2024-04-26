@@ -48,6 +48,30 @@ main:after {
     z-index: -1; 
 }
 
+h1{
+    height: 100px;
+    
+}
+
+#footer {
+    height: 100px;
+    width: 100px;
+    background-color: orange;
+}
+#footer div h1{
+    height: 100px;
+    width: 100px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: orange;
+    text-shadow: 10px;
+}
+
+#footer div h1 p {
+    background-color: blue;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-shadow: 10px aquamarine;
+}
+
 #content{
     display:flex;
     flex-wrap: wrap;
@@ -81,4 +105,3 @@ main:after {
 h2{
     text-align: center;
 }
-

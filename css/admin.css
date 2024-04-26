@@ -123,6 +123,12 @@ iframe {
     margin-left:5%;
     margin-right:5%;
 }
+
+#footer div h1 {
+    width: 100px;
+    height: 100px;
+    background-color: black;
+}
 .loading {
     --speed-of-animation: 2s;
     --first-color: #09aae0;
