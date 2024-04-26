@@ -16,7 +16,7 @@ header{
 }
 h1 {
     text-align: center;
-    color:  black;
+    color:  white;
     padding-top: 3%;
     font-size: 400%;
     margin-left: 20%;
@@ -36,7 +36,6 @@ main{
     background-color: #3A3B3C;
     margin-left: 10%;
     margin-right: 10%;
-    filter:opacity(50%);
 }
 
 main:after {
@@ -55,17 +54,27 @@ main:after {
     
     div{
         width: 45%;
-        background: linear-gradient(90deg, #09aae0, #82509f, #eb3791, #d6098b, #f95a28, #ff9f00 );
+        background-color: purple;
+        /*linear-gradient(90deg, #09aae0, #82509f, #eb3791, #d6098b, #f95a28, #ff9f00 );*/
         margin-left: calc(10%/3);
         margin-top: 10%;
         border-radius: 25px;
+        transition:0.4s;
+        transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.675);
+        cursor:pointer;
+        &:hover {
+            scale:1.05;
+        }
     }
     h2 {
         font-size:200%;
     }
     img {
         width:60%;
+        aspect-ratio: 1/1;
         margin-left:5%;
+        margin-bottom: calc(10%/3);
+        border: 2px solid gray;
     }
 }
 
