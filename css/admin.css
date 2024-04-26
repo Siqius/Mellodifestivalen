@@ -75,3 +75,9 @@ video {
     margin-left:5%;
     margin-right:5%;
 }
+
+#footer div h1 {
+    width: 100px;
+    height: 100px;
+    background-color: black;
+}
