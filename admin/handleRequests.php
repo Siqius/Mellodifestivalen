@@ -1,11 +1,19 @@
 <?php 
 
-$input = file_get_contents('php://input');
+$mysql_host = "localhost";
+$mysql_user = "root";
+$mysql_password = "";
+$mysql_database = "melodifestivalen";
 
-$data = json_decode($input,true);
+$url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+if(str_contains($url, 'afa-mello')) {
+    include './credentials.php';
+}
+$data = $_POST;
 
 if(!empty(isset($data["addcontender"]))) {
-    $mysqli = new mysqli("localhost", "root", "", "melodifestivalen");
+    $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
     if($mysqli === false){
         die("ERROR: Could not connect. " . $mysqli->connect_error);
     }
@@ -24,11 +32,11 @@ if(!empty(isset($data["addcontender"]))) {
 
     $stmt->close();
 
-    $SQLquery = "INSERT INTO artist(artistname,background) VALUES(?,?)";
+    $SQLquery = "INSERT INTO artist(artistname,background,image) VALUES(?,?,?)";
 
     $stmt = $mysqli->prepare($SQLquery);
 
-    $stmt->bind_param("ss",$data["artistname"],$data["artistbackground"]);
+    $stmt->bind_param("sss",$data["artistname"],$data["artistbackground"],$data["artistimage"]);
 
     $stmt->execute();
 
@@ -48,7 +56,7 @@ if(!empty(isset($data["addcontender"]))) {
 }
 
 if(!empty(isset($data["deletecontender"]))) {
-    $mysqli = new mysqli("localhost", "root", "", "melodifestivalen");
+    $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
     if($mysqli === false){
         die("ERROR: Could not connect. " . $mysqli->connect_error);
     }
@@ -56,21 +64,43 @@ if(!empty(isset($data["deletecontender"]))) {
     # Set the charset to utf8, create a prepared statement and execute it, we use prepared statements to avoid SQL injections
     $mysqli->set_charset("utf8");
 
-    $SQLquery = "DELETE FROM bidrag, artist, song WHERE ID=?";
+    $SQLquery = "DELETE FROM bidrag WHERE ID=?";
 
     $stmt = $mysqli->prepare($SQLquery);
 
-    $stmt->bind_param("i",$data["deletecontender"]);
+    $stmt->bind_param("i",$data["ID"]);
+
+    $stmt->execute();
+
+    $stmt->close();
+
+    $SQLquery = "DELETE FROM artist WHERE ID=?";
+
+    $stmt = $mysqli->prepare($SQLquery);
+
+    $stmt->bind_param("i",$data["ID"]);
+
+    $stmt->execute();
+
+    $stmt->close();
+
+    $SQLquery = "DELETE FROM song WHERE ID=?";
+
+    $stmt = $mysqli->prepare($SQLquery);
+
+    $stmt->bind_param("i",$data["ID"]);
 
     $stmt->execute();
 
     $stmt->close();
 
     $mysqli->close();
+
+    echo "SUCCESS";
 }
 
 if(!empty(isset($data["retrievecontest"]))) {
-    $mysqli = new mysqli("localhost", "root", "", "melodifestivalen");
+    $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
     if($mysqli === false){
         die("ERROR: Could not connect. " . $mysqli->connect_error);
     }
