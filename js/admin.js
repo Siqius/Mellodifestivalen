@@ -14,9 +14,7 @@ async function fetchData(fetchUrl, objectToSend) {
             throw new Error('Network response was not ok');
         }
 
-        const resultFromPHP = await response.text();
-        console.log(resultFromPHP);
-
+        var resultFromPHP = await response.text();
         return resultFromPHP;
 
     } catch (error) {
@@ -49,12 +47,12 @@ async function addContender() {
         alert(`Deltävling "${contest}" existerar inte (1-3).`);
     }
 
-    const response = await fetchData("../admin/handlerequests.php/", {artistname: artistname, songname: songname, artistimage:artistimage, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
+    var response = await fetchData("../admin/handlerequests.php/", {artistname: artistname, songname: songname, artistimage:artistimage, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
     retrieveContest(parseInt(contest));
 }
 
 async function deleteContender(ID, contest) {
-    const response = await fetchData("../admin/handlerequests.php/", {deletecontender: true, ID:ID});
+    var response = await fetchData("../admin/handlerequests.php/", {deletecontender: true, ID:ID});
     if(response == "SUCCESS") retrieveContest(contest, remove = true);
 }
 
