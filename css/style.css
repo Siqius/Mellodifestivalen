@@ -75,33 +75,139 @@ h1{
 #content{
     display:flex;
     flex-wrap: wrap;
-    
     div{
         width: 45%;
         background-color: purple;
         /*linear-gradient(90deg, #09aae0, #82509f, #eb3791, #d6098b, #f95a28, #ff9f00 );*/
         margin-left: calc(10%/3);
-        margin-top: 10%;
+        margin-top: 5%;
         border-radius: 25px;
         transition:0.4s;
         transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.675);
         cursor:pointer;
+        overflow:hidden;
+        .container {
+            width:60%;
+            margin-bottom:calc(10%/3);
+            margin-left: calc(10%/3);
+            .wrapper {
+                width:85%;
+                aspect-ratio: 1/1;
+                border: 10px solid #ffff;
+                display:flex;
+                img {
+                    animation: slide 28s infinite;
+                    width:100%; 
+                    aspect-ratio: 1/1;
+                }
+            }
+        }
+        h2 {
+            font-size:200%;
+        }
+        .divcontent {
+            width:100%;
+            display:flex;
+        }
+        .artist-name-container {
+            animation: highlight 28s infinite;
+            width:20%;
+        }
         &:hover {
             scale:1.05;
         }
-    }
-    h2 {
-        font-size:200%;
-    }
-    img {
-        width:60%;
-        aspect-ratio: 1/1;
-        margin-left:5%;
-        margin-bottom: calc(10%/3);
-        border: 2px solid gray;
     }
 }
 
 h2{
     text-align: center;
 }
+<<<<<<< Updated upstream
+=======
+
+@keyframes highlight {
+    0% {
+        p:nth-child(1) {
+            transform:scale(2);
+        }
+    }
+    12% {
+        p:nth-child(1) {
+            transform:scale(2)
+        }
+    }
+    17% {
+        p:nth-child(1) {
+            transform:scale(2)
+        }
+    }
+    29% {
+        p:nth-child(2) {
+            transform:scale(2)
+        }
+    }
+    34% {
+        p:nth-child(2) {
+            transform:scale(2)
+        }
+    }
+    46% {
+    }
+    51% {
+    }
+    63% {
+    }
+    68% {
+    }
+    80% {
+    }
+    85% {
+    }
+    97% {
+    }
+    100% {
+    }
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    12% {
+        transform: translateX(0);
+    }
+    17% {
+        transform: translateX(-100%);
+    }
+    29% {
+        transform: translateX(-100%);
+    }
+    34% {
+        transform: translateX(-200%);
+    }
+    46% {
+        transform: translateX(-200%);
+    }
+    51% {
+        transform: translateX(-300%);
+    }
+    63% {
+        transform: translateX(-300%);
+    }
+    68% {
+        transform: translateX(-400%);
+    }
+    80% {
+        transform: translateX(-400%);
+    }
+    85% {
+        transform: translateX(-500%);
+    }
+    97% {
+        transform: translateX(-500%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+>>>>>>> Stashed changes
