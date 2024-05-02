@@ -108,10 +108,5 @@ if($user && $pass) {
     }
 
     ?>
-    <footer>
-        <div>
-            <h1> Mello är riktigt bra <h1>
-        </div>
-    </footer>
 </body>
 </html>

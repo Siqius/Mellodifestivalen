@@ -1,3 +1,5 @@
+var songsOnContest;
+
 async function fetchData(fetchUrl, objectToSend) {
     try {
         let formData = new FormData();
@@ -46,17 +48,23 @@ async function addContender() {
     if(contest != "1" && contest != "2" && contest != "3") {
         alert(`Deltävling "${contest}" existerar inte (1-3).`);
     }
-
+    var full = await fetchData("../admin/handlerequests.php/", {retrievecontest: true, contest: contest});
+    console.log(full);
+    if(full.length >= 6) {
+        alert(`maximalt nummer med bidrag på deltävling ${contest} (6 bidrag)`);
+        return;
+    }
+    
     var response = await fetchData("../admin/handlerequests.php/", {artistname: artistname, songname: songname, artistimage:artistimage, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
     retrieveContest(parseInt(contest));
 }
 
 async function deleteContender(ID, contest) {
     var response = await fetchData("../admin/handlerequests.php/", {deletecontender: true, ID:ID});
-    if(response == "SUCCESS") retrieveContest(contest, remove = true);
+    if(response == "SUCCESS") retrieveContest(contest);
 }
 
-async function retrieveContest(contest, remove = false) {
+async function retrieveContest(contest) {
     let response = await fetchData("../admin/handlerequests.php/", {retrievecontest: true, contest: contest});
     response = JSON.parse(response);
     let body = document.querySelector("#content");
@@ -78,7 +86,8 @@ async function retrieveContest(contest, remove = false) {
             div.classList.remove("whileloading")
         })
     },5000)
-    
+    songsOnContest = response.length;
+    console.log(songsOnContest);
     response.forEach(contest => {
         let wrapper = document.createElement("div");
         let artistname = document.createElement("h1");
@@ -103,7 +112,6 @@ async function retrieveContest(contest, remove = false) {
         button.innerHTML = "Ta bort bidrag";
         let image = document.createElement("img");
         image.src = contest["image"];
-        console.log(image);
         wrapper.appendChild(artistname);
         wrapper.appendChild(songname);
         wrapper.appendChild(background);
