@@ -96,6 +96,14 @@ if($user && $pass) {
             <button type="button" onclick="retrieveContest(4)">4</button>
         </div>
         ';
+
+        echo '
+        <div id="deleteall">
+            <h2>Rensa alla bidrag</h2>
+            <button type="button" onclick="deleteall()">Rensa alla</button>
+        </div>
+        ';
+
         echo '
         </div>
         ';
@@ -108,10 +116,5 @@ if($user && $pass) {
     }
 
     ?>
-    <footer>
-        <div>
-            <h1> Mello är riktigt bra <h1>
-        </div>
-    </footer>
 </body>
 </html>

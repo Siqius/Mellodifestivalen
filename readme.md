@@ -1,0 +1,1 @@
+/admin för att komma åt admin sidan
