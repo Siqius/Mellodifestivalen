@@ -77,7 +77,11 @@ h1{
     flex-wrap: wrap;
     div{
         width: 45%;
-        background-color: purple;
+        background: rgb(34,193,195);
+            background: -moz-linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+            background: -webkit-linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+            background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#22c1c3",endColorstr="#fdbb2d",GradientType=1);
         /*linear-gradient(90deg, #09aae0, #82509f, #eb3791, #d6098b, #f95a28, #ff9f00 );*/
         margin-left: calc(10%/3);
         margin-top: 5%;
@@ -122,8 +126,6 @@ h1{
 h2{
     text-align: center;
 }
-<<<<<<< Updated upstream
-=======
 
 @keyframes highlight {
     0% {
@@ -210,4 +212,3 @@ h2{
         transform: translateX(0);
     }
 }
->>>>>>> Stashed changes
