@@ -25,12 +25,12 @@ async function fetchData(fetchUrl, objectToSend) {
     }
 }
 
+//retrieve contests from database
 async function loadContests() {
     for(i = 1; i<5; i++) {
         let imgWrapper = document.querySelector(`.w${i}`);
         let nameWrapper = document.querySelector(`.anc${i}`)
         let response = await fetchData("./admin/handlerequests.php/", {retrievecontest: true, contest: i});
-        console.log(response);
         response = JSON.parse(response);
         count = 0;
         response.forEach(contest => {
@@ -62,7 +62,7 @@ async function loadContests() {
     allP.forEach(e => {
         e.style.filter = "blur(1px)";
         if(e.classList.contains("p0")) {
-            e.style.transform = "scale(1.3)";
+            e.style.transform = "scale(1.2)";
             e.style.filter = "blur(0)";
         }
     })
@@ -71,9 +71,8 @@ async function loadContests() {
 loadContests();
 
 function animate() {
-    console.log(allP);
     allP.forEach(e => {
-        e.style.transform = "scale(1)";
+        e.style.transform = "scale(0.8)";
         e.style.filter = "blur(1px)";
     });
     let imgs = [...document.querySelectorAll(`.imgscroll`)];
@@ -82,7 +81,7 @@ function animate() {
     });
     let p = [...document.querySelectorAll(`.p${slide}`)];
     p.forEach(e => {
-        e.style.transform = "scale(1.3)";
+        e.style.transform = "scale(1.2)";
         e.style.filter = "blur(0)";
     });
     slide += 1;
