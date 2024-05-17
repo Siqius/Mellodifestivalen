@@ -54,6 +54,15 @@ footer{
     margin-top:2%;    
 }
 
+footer div{
+    justify-content: center;
+    text-align:center;
+    align-items:center;
+    padding-top: 1%;
+    line-height: 150%;
+    
+}
+
 #content{
     display:flex;
     flex-wrap: wrap;
