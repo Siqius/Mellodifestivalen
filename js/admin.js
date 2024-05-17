@@ -49,7 +49,7 @@ async function addContender() {
         alert(`Deltävling "${contest}" existerar inte (1-3).`);
     }
     var full = await fetchData("../admin/handlerequests.php/", {retrievecontest: true, contest: contest});
-    console.log(full);
+    var full = JSON.parse(full);
     if(full.length >= 6) {
         alert(`maximalt nummer med bidrag på deltävling ${contest} (6 bidrag)`);
         return;
@@ -87,7 +87,6 @@ async function retrieveContest(contest) {
         })
     },5000)
     songsOnContest = response.length;
-    console.log(songsOnContest);
     response.forEach(contest => {
         let wrapper = document.createElement("div");
         let artistname = document.createElement("h1");
