@@ -33,7 +33,7 @@ body {
     height:100%;
     border-right:2px solid rgb(82, 82, 82);
     button {
-        width:23%;
+        width:30%;
         aspect-ratio: 1/1;
         font-size:90%;
         background-color:rgb(82, 82, 82);

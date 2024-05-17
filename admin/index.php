@@ -11,11 +11,8 @@ $mysql_database = "melodifestivalen";
 
 $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-if(str_contains($url, 'afa-mello')) {
-    $mysql_host = "localhost";
-    $mysql_user = "ntigskov_afa-mello";
-    $mysql_password = "q8GyQyP;a~nN";
-    $mysql_database = "ntigskov_afa-mello";
+if(strpos($url, 'afa-mello')) {
+    include './credentials.php';
 }
 
 if(!empty(isset($_POST["user"]))) {
