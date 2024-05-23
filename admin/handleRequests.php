@@ -125,4 +125,39 @@ if(!empty(isset($data["retrievecontest"]))) {
 
     echo json_encode($result);
 }
+
+if(!empty(isset($data["addvote"]))) {
+    $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
+    if($mysqli === false){
+        die("ERROR: Could not connect. " . $mysqli->connect_error);
+    }
+
+    $mysqli->set_charset("utf8");
+
+    $SQLquery = "SELECT votes FROM bidrag WHERE ID=?";
+
+    $stmt = $mysqli->prepare($SQLquery);
+
+    $stmt->bind_param("i",$data["ID"]);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    $votes = $result[0]["votes"];
+
+    $stmt->close();
+
+    $SQLquery = "UPDATE bidrag SET votes=? WHERE ID=?";
+
+    $stmt = $mysqli->prepare($SQLquery);
+
+    $votes += 1;
+
+    $stmt->bind_param("ii",$votes,$data["ID"]);
+
+    $stmt->execute();
+
+    echo "SUCCESS";
+}
 ?>

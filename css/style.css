@@ -80,7 +80,6 @@ main{
         border-radius: 25px;
         transition:0.4s;
         transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.675);
-        cursor:pointer;
         overflow:hidden;
         .container {
             width:50%;
@@ -119,6 +118,16 @@ main{
             display: flex;
             flex-wrap:wrap;
             row-gap: 0;
+            div {
+                display:flex;
+            }
+            button {
+                cursor:pointer;
+                height:100%;
+                width:20%;
+                border-radius:100%;
+                background: linear-gradient(90deg, #09aae0dd, #82509fdd, #eb3791dd, #d6098bdd, #f95a28dd, #ff9f00dd);
+            }
             p {
                 width:100%;
                 transform:scale(0.8);
@@ -130,9 +139,41 @@ main{
             }
         }
     }
-    .contest:hover {
-        scale:1.05;
+}
+
+#acceptcookiesdiv {
+    opacity: 0.5;
+    position: fixed;
+    bottom:0;
+    left:0;
+    height:25%;
+    width:100%;
+    background:gray;
+    align-items:center;
+    justify-content: center;
+    display:flex;
+    flex-direction: column;
+    h3 {
+        font-size:40px;
     }
+    div {
+        width:fit-content;
+        display:flex;
+        flex-direction: row;
+        button {
+            background-color:red;
+            color:white;
+            width:50%;
+            aspect-ratio: 1/1;
+        }
+        button:first-child {
+            background-color:green;
+        }
+    }
+}
+
+.hideacceptcookies {
+    scale:0;
 }
 
 @media only screen and (max-width: 600px) {
