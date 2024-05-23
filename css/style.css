@@ -30,6 +30,9 @@ body {
 }
 
 header{
+    width:100%;
+    height:25%;
+    background: linear-gradient(90deg, #09aae0dd, #82509fdd, #eb3791dd, #d6098bdd, #f95a28dd, #ff9f00dd);
     width:  100%;
     height:25vh;
     background-color: black;
@@ -63,8 +66,27 @@ main{
     background-color: #3A3B3C;
     margin-left: 10%;
     margin-right: 10%;
-    box-shadow: inset 0 0 60px 30px black;
+	box-shadow: inset 0 0 60px 30px black;
     border-radius:50px;
+}
+
+footer{
+    width: 100%;
+    height: 25%;
+    background: black;
+    margin-top:2%;    
+}
+
+footer div{
+    justify-content: center;
+    text-align:center;
+    align-items:center;
+    padding-top: 1%;
+    line-height: 150%;
+    color: white;
+    
+}
+ 
 }
 
 #content{
