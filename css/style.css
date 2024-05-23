@@ -50,7 +50,7 @@ main{
 footer{
     width: 100%;
     height: 25%;
-    background: linear-gradient(90deg, #09aae0dd, #82509fdd, #eb3791dd, #d6098bdd, #f95a28dd, #ff9f00dd); 
+    background: black;
     margin-top:2%;    
 }
 
@@ -60,8 +60,11 @@ footer div{
     align-items:center;
     padding-top: 1%;
     line-height: 150%;
+    color: white;
     
 }
+
+
 
 #content{
     display:flex;
