@@ -95,17 +95,6 @@ if($user && $pass) {
         ';
 
         echo '
-        <div id="deleteall">
-            <h2>Rensa alla bidrag</h2>
-            <button type="button" onclick="deleteall()">Rensa alla</button>
-        </div>
-        ';
-
-        echo '
-        </div>
-        ';
-
-        echo '
         <div id="content">
             
         </div>

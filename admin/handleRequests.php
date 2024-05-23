@@ -10,6 +10,7 @@ $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_
 if(strpos($url, 'afa-mello')) {
     include './credentials.php';
 }
+
 $data = $_POST;
 
 if(!empty(isset($data["addcontender"]))) {
@@ -123,9 +124,5 @@ if(!empty(isset($data["retrievecontest"]))) {
     $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
     echo json_encode($result);
-}
-
-if(!empty(isset($data["deleteall"]))) {
-    
 }
 ?>

@@ -20,6 +20,7 @@ async function fetchData(fetchUrl, objectToSend) {
         }
 
         var resultFromPHP = await response.text();
+        console.log(resultFromPHP);
         return resultFromPHP;
         
     } catch (error) {
@@ -29,7 +30,7 @@ async function fetchData(fetchUrl, objectToSend) {
 
 //retrieve contests from database
 async function loadContests() {
-    for(let i = 1; i<5; i++) {
+    for(let i = 1; i<4; i++) {
         let imgWrapper = document.querySelector(`.w${i}`);
         let nameWrapper = document.querySelector(`.anc${i}`);
         let response = await fetchData("./admin/handlerequests.php/", {retrievecontest: true, contest: i});
@@ -87,8 +88,8 @@ async function loadContests() {
     console.log(finals);
 
     count = 0;
-    let imgWrapper = document.querySelector(`.w5`);
-    let nameWrapper = document.querySelector(`.anc5`);
+    let imgWrapper = document.querySelector(`.w4`);
+    let nameWrapper = document.querySelector(`.anc4`);
     finals.forEach(finalist => {
         if(finalist.votes == 0) {return;}
         let img = document.createElement("img");
@@ -96,6 +97,11 @@ async function loadContests() {
         img.classList.add("imgscroll");
         imgWrapper.appendChild(img);
         
+        let button = document.createElement("button");
+        button.onclick = () => {
+            vote(``)
+        }
+
         let p = document.createElement("p");
         p.innerHTML = finalist.artistname;
         p.classList.add(`p${count}`);
