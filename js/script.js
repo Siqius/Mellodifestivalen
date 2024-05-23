@@ -2,6 +2,17 @@ var slide = 1;
 var allP;
 var contests = document.querySelectorAll(".contest");
 var allContests = [];
+var voteTimeout = false;
+var voted = false;
+var acceptedcookies = localStorage.getItem("acceptedcookies");
+
+if(acceptedcookies) {
+    let acccookiesdiv = document.querySelector("#acceptcookiesdiv");
+    acccookiesdiv.classList.add("hideacceptcookies");
+    voted = localStorage.getItem("voted") ? true : false;
+    console.log(voted);
+    console.log(localStorage.getItem("voted"))
+}
 
 async function fetchData(fetchUrl, objectToSend) {
     try {
@@ -20,7 +31,6 @@ async function fetchData(fetchUrl, objectToSend) {
         }
 
         var resultFromPHP = await response.text();
-        console.log(resultFromPHP);
         return resultFromPHP;
         
     } catch (error) {
@@ -44,10 +54,21 @@ async function loadContests() {
                 img.classList.add("imgscroll");
                 imgWrapper.appendChild(img);
                 
+                let div = document.createElement("div");
+
+                let button = document.createElement("button");
+                button.onclick = () => {
+                    vote(`${contest["ID"]}`);
+                }
+                button.innerHTML = "Rösta!";
+                div.appendChild(button);
+
                 let p = document.createElement("p");
                 p.innerHTML = contest.artistname;
                 p.classList.add(`p${count}`);
-                nameWrapper.appendChild(p);
+                div.appendChild(p);
+
+                nameWrapper.appendChild(div);
                 count++;
             })
         } catch(error) {}
@@ -64,7 +85,6 @@ async function loadContests() {
         }
     }
     var finals = [{"votes":0},{"votes":0},{"votes":0},{"votes":0},{"votes":0},{"votes":0}];
-    console.log(allContests);
     let i = 0;
     allContests.forEach(e => {
         e.forEach(contender => {
@@ -79,13 +99,10 @@ async function loadContests() {
         e.forEach(contender => {
             if(contender.votes > finals[i].votes && contender != finals[i-1]) {
                 finals[i] = contender;
-                console.log(contender);
-                console.log(i);
             }
         });
         i += 2;
     });
-    console.log(finals);
 
     count = 0;
     let imgWrapper = document.querySelector(`.w4`);
@@ -96,16 +113,21 @@ async function loadContests() {
         img.src = finalist.image;
         img.classList.add("imgscroll");
         imgWrapper.appendChild(img);
-        
+        let div = document.createElement("div");
+
         let button = document.createElement("button");
         button.onclick = () => {
-            vote(``)
+            vote(`${finalist["ID"]}`);
         }
+        button.innerHTML = "Rösta!";
+        div.appendChild(button);
 
         let p = document.createElement("p");
         p.innerHTML = finalist.artistname;
         p.classList.add(`p${count}`);
-        nameWrapper.appendChild(p);
+        div.appendChild(p);
+
+        nameWrapper.appendChild(div);
         count++;
     });
     for(count; count < 6; count++) {
@@ -133,6 +155,33 @@ async function loadContests() {
 
 loadContests();
 
+async function vote(ID) {
+    if(voteTimeout) return;
+    if(!localStorage.getItem("acceptedcookies")) {
+        alert("Accept cookise before voting");
+        return;
+    }
+    if(localStorage.getItem("voted")) return;
+    voteTimeout = true;
+    let response = await fetchData("./admin/handlerequests.php/", {"addvote":true, "ID":parseInt(ID)});
+    if(response == "SUCCESS") {
+        localStorage.setItem("voted", true);
+        voteTimeout = false;
+    }
+}
+
+function acceptcookies() {
+    let acccookiesdiv = document.querySelector("#acceptcookiesdiv");
+    acccookiesdiv.classList.add("hideacceptcookies");
+    localStorage.setItem("acceptedcookies", true);
+    voted = localStorage.getItem("voted") ? true : false;
+}
+
+function denycookies() {
+    let acccookiesdiv = document.querySelector("#acceptcookiesdiv");
+    acccookiesdiv.classList.add("hideacceptcookies");
+}
+
 function animate() {
     allP.forEach(e => {
         e.style.transform = "scale(0.8)";
@@ -149,19 +198,5 @@ function animate() {
     });
     slide = slide >= 5 ? 0 : slide + 1;
 }
-
-document.addEventListener("click", e => {
-    console.log(allContests);
-    /*
-    contests.forEach(e => {
-        e.style.transform = "scale(1)";
-    })
-    div = e.target.closest(".contest");
-    div.style.transform = "scale(1.2)";
-    div.style.zIndex = "100";
-    div.style.position = "sticky";
-    */
-
-})
 
 setInterval(animate, 14000/3);
