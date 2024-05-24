@@ -53,24 +53,21 @@ h1{
     
 }
 
-#footer {
-    height: 100px;
-    width: 100px;
-    background-color: orange;
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    
 }
-#footer div h1{
-    height: 100px;
-    width: 100px;
+footer div h1{
+    display:flex;
+    flex-wrap: wrap;
+    height: 50px;
+    width: 910px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: orange;
-    text-shadow: 10px;
+    background-color: rgb(83, 83, 83);
+    font-size: 110%;
 }
 
-#footer div h1 p {
-    background-color: blue;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-shadow: 10px aquamarine;
-}
 
 #content{
     display:flex;
