@@ -60,7 +60,7 @@ async function loadContests() {
                 button.onclick = () => {
                     vote(`${contest["ID"]}`);
                 }
-                button.innerHTML = "Rösta!";
+                button.innerHTML = "Rösta";
                 div.appendChild(button);
 
                 let p = document.createElement("p");
@@ -119,7 +119,7 @@ async function loadContests() {
         button.onclick = () => {
             vote(`${finalist["ID"]}`);
         }
-        button.innerHTML = "Rösta!";
+        button.innerHTML = "Rösta";
         div.appendChild(button);
 
         let p = document.createElement("p");
