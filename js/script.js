@@ -5,7 +5,11 @@ var allContests = [];
 var voteTimeout = false;
 var voted = false;
 var acceptedcookies = localStorage.getItem("acceptedcookies");
+var active;
 
+var timers = document.querySelectorAll(".timertext")
+
+//display accept cookies option if user hasnt accepted cookies yet
 if(acceptedcookies) {
     let acccookiesdiv = document.querySelector("#acceptcookiesdiv");
     acccookiesdiv.classList.add("hideacceptcookies");
@@ -14,6 +18,7 @@ if(acceptedcookies) {
     console.log(localStorage.getItem("voted"))
 }
 
+//function to send post requests to the server
 async function fetchData(fetchUrl, objectToSend) {
     try {
         let formData = new FormData();
@@ -38,8 +43,9 @@ async function fetchData(fetchUrl, objectToSend) {
     }
 }
 
-//retrieve contests from database
+//retrieve contests from database through server
 async function loadContests() {
+    //generate the website content using the contests from the database
     for(let i = 1; i<4; i++) {
         let imgWrapper = document.querySelector(`.w${i}`);
         let nameWrapper = document.querySelector(`.anc${i}`);
@@ -58,7 +64,7 @@ async function loadContests() {
 
                 let button = document.createElement("button");
                 button.onclick = () => {
-                    vote(`${contest["ID"]}`);
+                    vote(contest["ID"], i);
                 }
                 button.innerHTML = "Rösta";
                 div.appendChild(button);
@@ -72,6 +78,7 @@ async function loadContests() {
                 count++;
             })
         } catch(error) {}
+        // if all contests arent filled with contestants, generate temporary ones
         for(count; count < 6; count++) {
             let img = document.createElement("img");
             img.src = "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA5L3Jhd3BpeGVsX29mZmljZV8zNF9mbHVmZnlfY2h1YmJ5X3Bhc3RlbF9jYXRzX2thd2FpaV9hZXN0aGV0aWNfM182YTJkZjRmNS03NTZiLTQyODgtOWQ4Mi1lZmRlMmE1MTA2OWRfMS5qcGc.jpg";
@@ -84,6 +91,7 @@ async function loadContests() {
             nameWrapper.appendChild(p);
         }
     }
+    //find the 2 contestants with most votes from the first 3 contests
     var finals = [{"votes":0},{"votes":0},{"votes":0},{"votes":0},{"votes":0},{"votes":0}];
     let i = 0;
     allContests.forEach(e => {
@@ -104,6 +112,7 @@ async function loadContests() {
         i += 2;
     });
 
+    // generate the finals using the previous block to find the most voted contestants
     count = 0;
     let imgWrapper = document.querySelector(`.w4`);
     let nameWrapper = document.querySelector(`.anc4`);
@@ -117,7 +126,7 @@ async function loadContests() {
 
         let button = document.createElement("button");
         button.onclick = () => {
-            vote(`${finalist["ID"]}`);
+            vote(finalist["ID"], 4);
         }
         button.innerHTML = "Rösta";
         div.appendChild(button);
@@ -130,6 +139,7 @@ async function loadContests() {
         nameWrapper.appendChild(div);
         count++;
     });
+    // if finals arent filled with contestants, generate temporary ones
     for(count; count < 6; count++) {
         let img = document.createElement("img");
         img.src = "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA5L3Jhd3BpeGVsX29mZmljZV8zNF9mbHVmZnlfY2h1YmJ5X3Bhc3RlbF9jYXRzX2thd2FpaV9hZXN0aGV0aWNfM182YTJkZjRmNS03NTZiLTQyODgtOWQ4Mi1lZmRlMmE1MTA2OWRfMS5qcGc.jpg";
@@ -141,7 +151,7 @@ async function loadContests() {
         p.classList.add(`p${count}`);
         nameWrapper.appendChild(p);
     }
-    
+    // initiate the animation
     slide = 1;
     allP = [...document.querySelectorAll(".artist-name-container p")];
     allP.forEach(e => {
@@ -155,21 +165,26 @@ async function loadContests() {
 
 loadContests();
 
-async function vote(ID) {
+//check a bunch of conditions whether or not user is eligible for voting, if all pass then vote
+async function vote(ID, contest) {
     if(voteTimeout) return;
     if(!localStorage.getItem("acceptedcookies")) {
         alert("Accept cookise before voting");
         return;
     }
     if(localStorage.getItem("voted")) return;
+    console.log(active, contest);
+    if(active != contest) return;
     voteTimeout = true;
     let response = await fetchData("./admin/handlerequests.php/", {"addvote":true, "ID":parseInt(ID)});
     if(response == "SUCCESS") {
         localStorage.setItem("voted", true);
+        console.log("VOTED");
         voteTimeout = false;
     }
 }
 
+//function called when user accepts cookies
 function acceptcookies() {
     let acccookiesdiv = document.querySelector("#acceptcookiesdiv");
     acccookiesdiv.classList.add("hideacceptcookies");
@@ -177,11 +192,84 @@ function acceptcookies() {
     voted = localStorage.getItem("voted") ? true : false;
 }
 
+//function called when user denies cookies
 function denycookies() {
     let acccookiesdiv = document.querySelector("#acceptcookiesdiv");
     acccookiesdiv.classList.add("hideacceptcookies");
 }
 
+
+function time() {
+    // get local time
+    let time = new Date().toLocaleTimeString().split(":");
+    let minute = time[1][1];
+    let seconds = time[2];
+
+    console.log(minute, ":", seconds);
+
+    //contest 1
+    if(minute <= 1) {
+        // reset vote on new contest
+        if(minute == 0 && seconds == 0 && localStorage.getItem("acceptedcookies")) {
+            localStorage.setItem("voted", false);
+        }
+
+        //set timers for each contest and store the active contest
+        timers[0].innerHTML = "";
+        timers[1].innerHTML = seconds <= 49 ? `${1 - parseInt(minute)}:${59-parseInt(seconds)}` : `${1 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        timers[2].innerHTML = seconds <= 49 ? `${3 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        active = 1;
+
+    }
+
+    //contest 2
+    else if(minute <= 3) {
+        // reset vote on new contest
+        if(minute == 2 && seconds == 0 && localStorage.getItem("acceptedcookies")) {
+            localStorage.setItem("voted", false);
+        }
+
+        //set timers for each contest and store the active contest
+        timers[0].innerHTML = seconds <= 49 ? `${9 - parseInt(minute)}:${59-parseInt(seconds)}` : `${9 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        timers[1].innerHTML = "";
+        timers[2].innerHTML = seconds <= 49 ? `${3 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        active = 2;
+    }
+
+    //contest 3
+    else if(minute <= 5) {
+        // reset vote on new contest
+        if(minute == 4 && seconds == 0 && localStorage.getItem("acceptedcookies")) {
+            localStorage.setItem("voted", false);
+        }
+
+        //set timers for each contest and store the active contest
+        timers[0].innerHTML = seconds <= 49 ? `${9 - parseInt(minute)}:${59-parseInt(seconds)}` : `${9 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        timers[1].innerHTML = seconds <= 49 ? `${11 - parseInt(minute)}:${59-parseInt(seconds)}` : `${11 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        timers[2].innerHTML = "";
+        timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        active = 3;
+    }
+
+    //contest 4 (finals)
+    else {
+        // reset vote on new contest
+        if(minute == 6 && seconds == 0 && localStorage.getItem("acceptedcookies")) {
+            localStorage.setItem("voted", false);
+        }
+
+        //set timers for each contest and store the active contest
+        timers[0].innerHTML = seconds <= 49 ? `${9 - parseInt(minute)}:${59-parseInt(seconds)}` : `${9 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        timers[1].innerHTML = seconds <= 49 ? `${11 - parseInt(minute)}:${59-parseInt(seconds)}` : `${11 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        timers[2].innerHTML = seconds <= 49 ? `${13 - parseInt(minute)}:${59-parseInt(seconds)}` : `${13 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        timers[3].innerHTML = "";
+        active = 4;
+    }
+}
+
+//animate the artist text and artist images
 function animate() {
     allP.forEach(e => {
         e.style.transform = "scale(0.8)";
@@ -199,4 +287,6 @@ function animate() {
     slide = slide >= 5 ? 0 : slide + 1;
 }
 
+//auto call functions
 setInterval(animate, 14000/3);
+setInterval(time, 1000);

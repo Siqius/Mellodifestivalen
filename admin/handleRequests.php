@@ -36,7 +36,7 @@ if(!empty(isset($data["addcontender"]))) {
     $SQLquery = "INSERT INTO artist(artistname,background,image) VALUES(?,?,?)";
 
     $stmt = $mysqli->prepare($SQLquery);
-
+    echo "INSERT INTO artist(artistname,background,image) VALUES(". $data["artistname"] .",". $data["artistbackground"] .",". $data["artistimage"] .")";
     $stmt->bind_param("sss",$data["artistname"],$data["artistbackground"],$data["artistimage"]);
 
     $stmt->execute();
@@ -54,6 +54,8 @@ if(!empty(isset($data["addcontender"]))) {
     $stmt->close();
 
     $mysqli->close();
+
+    echo "SUCCESS";
 }
 
 if(!empty(isset($data["deletecontender"]))) {

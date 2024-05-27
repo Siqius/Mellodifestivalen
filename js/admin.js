@@ -17,6 +17,7 @@ async function fetchData(fetchUrl, objectToSend) {
         }
 
         var resultFromPHP = await response.text();
+        console.log(resultFromPHP);
         return resultFromPHP;
 
     } catch (error) {
@@ -49,23 +50,28 @@ async function addContender() {
         alert(`Deltävling "${contest}" existerar inte (1-3).`);
     }
     var full = await fetchData("../admin/handlerequests.php/", {retrievecontest: true, contest: contest});
-    var full = JSON.parse(full);
-    if(full.length >= 6) {
-        alert(`maximalt nummer med bidrag på deltävling ${contest} (6 bidrag)`);
-        return;
-    }
+    try{
+        var full = JSON.parse(full);
+        if(full.length >= 6) {
+            alert(`maximalt nummer med bidrag på deltävling ${contest} (6 bidrag)`);
+            return;
+        }
+    } catch(error) {}
     
-    var response = await fetchData("../admin/handlerequests.php/", {artistname: artistname, songname: songname, artistimage:artistimage, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
+    var response = await fetchData("./handlerequests.php/", {artistname: artistname, songname: songname, artistimage:artistimage, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
     retrieveContest(parseInt(contest));
 }
 
 async function deleteContender(ID, contest) {
-    var response = await fetchData("../admin/handlerequests.php/", {deletecontender: true, ID:ID});
+    var response = await fetchData("./handlerequests.php/", {deletecontender: true, ID:ID});
     if(response == "SUCCESS") retrieveContest(contest);
 }
 
 async function retrieveContest(contest) {
-    let response = await fetchData("../admin/handlerequests.php/", {retrievecontest: true, contest: contest});
+    let response = await fetchData("./handlerequests.php/", {retrievecontest: true, contest: contest});
+    console.log(response);
+    if(!response) return;
+    console.log("not cancelled");
     response = JSON.parse(response);
     let body = document.querySelector("#content");
     body.innerHTML = "";
