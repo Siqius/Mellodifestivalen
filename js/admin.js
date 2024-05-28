@@ -1,5 +1,6 @@
 var songsOnContest;
 
+//send Post requests to server
 async function fetchData(fetchUrl, objectToSend) {
     try {
         let formData = new FormData();
@@ -17,7 +18,6 @@ async function fetchData(fetchUrl, objectToSend) {
         }
 
         var resultFromPHP = await response.text();
-        console.log(resultFromPHP);
         return resultFromPHP;
 
     } catch (error) {
@@ -25,7 +25,9 @@ async function fetchData(fetchUrl, objectToSend) {
     }
 }
 
+//function to add a contender to the database
 async function addContender() {
+    //gather all details
     let artistname = document.querySelector("input[name='artistname']").value;
     let songname = document.querySelector("input[name='songname']").value;
     let artistimage = document.querySelector("input[name='artistimage']").value;
@@ -33,6 +35,7 @@ async function addContender() {
     let artistbackground = document.querySelector("input[name='artistbackground']").value;
     let contest = document.querySelector("input[name='contest']").value;
     let votes = document.querySelector("input[name='votes']").value;
+    //check for empty fields, validity of url, contest value and amount of participants
     if(artistname == "" || songname == "" || artistimage == "" || songurl == "" || artistbackground == "" || contest == "" || votes == "") {
         alert("Var vänlig fyll i alla rutor.");
         return;
@@ -58,20 +61,21 @@ async function addContender() {
         }
     } catch(error) {}
     
+    //send the request
     var response = await fetchData("./handlerequests.php/", {artistname: artistname, songname: songname, artistimage:artistimage, songurl: songurl, artistbackground: artistbackground, contest: contest, votes: votes, addcontender: true});
     retrieveContest(parseInt(contest));
 }
 
+//delete the selected contender
 async function deleteContender(ID, contest) {
     var response = await fetchData("./handlerequests.php/", {deletecontender: true, ID:ID});
     if(response == "SUCCESS") retrieveContest(contest);
 }
 
+//retrieve all participants from selected contest
 async function retrieveContest(contest) {
     let response = await fetchData("./handlerequests.php/", {retrievecontest: true, contest: contest});
-    console.log(response);
     if(!response) return;
-    console.log("not cancelled");
     response = JSON.parse(response);
     let body = document.querySelector("#content");
     body.innerHTML = "";

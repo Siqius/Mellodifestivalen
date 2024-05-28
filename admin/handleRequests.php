@@ -7,12 +7,14 @@ $mysql_database = "melodifestivalen";
 
 $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
+//if server is running on website, import correct credentials
 if(strpos($url, 'afa-mello')) {
     include './credentials.php';
 }
 
 $data = $_POST;
 
+//add a contender to the database
 if(!empty(isset($data["addcontender"]))) {
     $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
     if($mysqli === false){
@@ -58,6 +60,7 @@ if(!empty(isset($data["addcontender"]))) {
     echo "SUCCESS";
 }
 
+//remove a contender from the database
 if(!empty(isset($data["deletecontender"]))) {
     $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
     if($mysqli === false){
@@ -102,6 +105,7 @@ if(!empty(isset($data["deletecontender"]))) {
     echo "SUCCESS";
 }
 
+//retrieve a contest
 if(!empty(isset($data["retrievecontest"]))) {
     $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
     if($mysqli === false){
@@ -126,8 +130,13 @@ if(!empty(isset($data["retrievecontest"]))) {
     $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
     echo json_encode($result);
+
+    $stmt->close();
+
+    $mysqli->close();
 }
 
+//add votes to a participant
 if(!empty(isset($data["addvote"]))) {
     $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
     if($mysqli === false){
@@ -161,5 +170,29 @@ if(!empty(isset($data["addvote"]))) {
     $stmt->execute();
 
     echo "SUCCESS";
+
+    $stmt->close();
+
+    $mysqli->close();
+}
+
+//reset all votes
+if(!empty(isset($data["resetvotes"]))) {
+    $mysqli = new mysqli($mysql_host, $mysql_user, $mysql_password, $mysql_database);
+    if($mysqli === false){
+        die("ERROR: Could not connect. " . $mysqli->connect_error);
+    }
+
+    $mysqli->set_charset("utf8");
+
+    $SQLquery = "UPDATE bidrag SET votes=0";
+
+    $stmt = $mysqli->prepare($SQLquery);
+
+    $stmt->execute();
+
+    $stmt->close();
+
+    $mysqli->close();
 }
 ?>
