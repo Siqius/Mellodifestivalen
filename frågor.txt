@@ -1,6 +1,0 @@
------frågor till lärare------
-
-måste användaren trycka på "acceptera cookies/localstorage" för att kunna rösta (måste det finnas en "accept cookies/localstorage" knapp)?
-
-
------frågor till varandra------
