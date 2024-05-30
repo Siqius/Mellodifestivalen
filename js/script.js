@@ -96,6 +96,7 @@ async function generateFinalists() {
         let p = document.createElement("p");
         p.innerHTML = finalist.artistname;
         p.classList.add(`p${count}`);
+        p.classList.add("animationtext");
         div.appendChild(p);
 
         nameWrapper.appendChild(div);
@@ -108,10 +109,13 @@ async function generateFinalists() {
         img.classList.add("imgscroll");
         imgWrapper.appendChild(img);
         
+        let div = document.createElement("div");
         let p = document.createElement("p");
         p.innerHTML = `artist ${count}`;
         p.classList.add(`p${count}`);
-        nameWrapper.appendChild(p);
+        p.classList.add("animationtext");
+        div.appendChild(p)
+        nameWrapper.appendChild(div);
     }
 }
 
@@ -144,6 +148,7 @@ async function loadContests() {
                 let p = document.createElement("p");
                 p.innerHTML = contest.artistname;
                 p.classList.add(`p${count}`);
+                p.classList.add("animationtext");
                 div.appendChild(p);
 
                 nameWrapper.appendChild(div);
@@ -157,16 +162,21 @@ async function loadContests() {
             img.classList.add("imgscroll");
             imgWrapper.appendChild(img);
             
+            let div = document.createElement("div");
+
             let p = document.createElement("p");
             p.innerHTML = `artist ${count}`;
             p.classList.add(`p${count}`);
-            nameWrapper.appendChild(p);
+            p.classList.add("animationtext");
+            div.appendChild(p);
+            nameWrapper.appendChild(div);
         }
     }
-    generateFinalists();
+    await generateFinalists();
     // initiate the animation
     slide = 1;
-    allP = [...document.querySelectorAll(".artist-name-container p")];
+    allP = [...document.querySelectorAll(".animationtext")];
+    console.log(allP);
     allP.forEach(e => {
         e.style.filter = "blur(1px)";
         if(e.classList.contains("p0")) {
@@ -185,13 +195,15 @@ async function vote(ID, contest) {
         alert("Accept cookise before voting");
         return;
     }
-    if(localStorage.getItem("voted")) return;
+    let voted = localStorage.getItem("voted");
+    if(voted == "true") return;
     if(active != contest) return;
     voteTimeout = true;
     let response = await fetchData("./admin/handlerequests.php/", {"addvote":true, "ID":parseInt(ID)});
     if(response == "SUCCESS") {
         localStorage.setItem("voted", true);
         voteTimeout = false;
+        alert("Du har röstat!");
     }
 }
 
@@ -215,6 +227,7 @@ async function time() {
     let time = new Date().toLocaleTimeString().split(":");
     let minute = time[1][1];
     let seconds = time[2];
+    minute = 4;
 
     //contest 1
     if(minute <= 1) {
@@ -224,14 +237,17 @@ async function time() {
             let response = await fetchData("./admin/handlerequests.php/", {"resetvotes":true});
             generateFinalists();
         }
-
+        
         //set timers for each contest and store the active contest
         timers[0].innerHTML = "";
         timers[1].innerHTML = seconds <= 49 ? `${1 - parseInt(minute)}:${59-parseInt(seconds)}` : `${1 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[2].innerHTML = seconds <= 49 ? `${3 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        for(let i = 1; i < 4; i++) {
+            timers[i].closest(".contest").style.filter = "blur(5px)";
+        }
+        timers[0].closest(".contest").style.filter = "";
         active = 1;
-
     }
 
     //contest 2
@@ -245,8 +261,15 @@ async function time() {
         //set timers for each contest and store the active contest
         timers[0].innerHTML = seconds <= 49 ? `${9 - parseInt(minute)}:${59-parseInt(seconds)}` : `${9 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[1].innerHTML = "";
+        timers[1].closest(".contest").style.filter = "blur(5px)";
         timers[2].innerHTML = seconds <= 49 ? `${3 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        for(let i = 0; i < 4; i++) {
+            if(i != 1) {
+                timers[i].closest(".contest").style.filter = "blur(5px)";
+            }
+        }
+        timers[1].closest(".contest").style.filter = "";
         active = 2;
     }
 
@@ -257,12 +280,19 @@ async function time() {
             localStorage.setItem("voted", false);
             generateFinalists();
         }
-
+        
         //set timers for each contest and store the active contest
         timers[0].innerHTML = seconds <= 49 ? `${9 - parseInt(minute)}:${59-parseInt(seconds)}` : `${9 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[1].innerHTML = seconds <= 49 ? `${11 - parseInt(minute)}:${59-parseInt(seconds)}` : `${11 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[2].innerHTML = "";
-        timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        timers[2].closest(".contest").style.filter = "blur(5px)";
+        timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        for(let i = 0; i < 4; i++) {
+            if(i != 2) {
+                timers[i].closest(".contest").style.filter = "blur(5px)";
+            }
+        }
+        timers[2].closest(".contest").style.filter = "";
         active = 3;
     }
 
@@ -273,12 +303,16 @@ async function time() {
             localStorage.setItem("voted", false);
             generateFinalists();
         }
-
+        
         //set timers for each contest and store the active contest
         timers[0].innerHTML = seconds <= 49 ? `${9 - parseInt(minute)}:${59-parseInt(seconds)}` : `${9 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[1].innerHTML = seconds <= 49 ? `${11 - parseInt(minute)}:${59-parseInt(seconds)}` : `${11 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[2].innerHTML = seconds <= 49 ? `${13 - parseInt(minute)}:${59-parseInt(seconds)}` : `${13 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = "";
+        for(let i = 0; i < 3; i++) {
+            timers[i].closest(".contest").style.filter = "blur(5px)";
+        }
+        timers[3].closest(".contest").style.filter = "";
         active = 4;
     }
 }

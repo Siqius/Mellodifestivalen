@@ -28,17 +28,19 @@ body {
     height:fit-content;
     width:fit-content;
     overflow-x:hidden;
-    
-    background: linear-gradient(180deg, #09aae0dd, #82509fdd, #eb3791dd, #d6098bdd, #f95a28dd, #ff9f00dd);
+    background-image: url("https://www.transparenttextures.com/patterns/batthern.png");
     position:relative;
     z-index:-2;
 }
 
 #background {
+    filter:contrast(3);
+    opacity:0.7;
+    z-index:-1;
     width:100%;
     height:100%;
-    background-image: url("https://www.transparenttextures.com/patterns/batthern.png");
-    z-index:-1;
+    position:absolute;
+    background: linear-gradient(90deg, #09aae0dd, #82509fdd, #eb3791dd, #d6098bdd, #f95a28dd, #ff9f00dd);
 }
 
 header{
@@ -77,6 +79,7 @@ main{
     margin-right: 10%;
     box-shadow: inset 0 0 60px 30px black;
     border-radius:50px;
+    border:#353638 12px solid;
     padding-bottom:5%;
 }
 
@@ -125,6 +128,7 @@ main{
             display:flex;
         }
         .artist-name-container {
+            height:100%;
             border-radius:0;
             margin-left:0;
             text-align:center;
@@ -132,6 +136,7 @@ main{
             flex-wrap:wrap;
             row-gap: 0;
             div {
+                height: calc(100% / 6);
                 display:flex;
                 border-radius:0;
             }
@@ -152,12 +157,14 @@ main{
                 height: calc(100%/6);
                 color:silver;
                 font-weight:bold;
-                text-shadow: 0 0 3px #FF0000, 0 0 5px orange;
+                text-shadow: 0 0 3px silver;
+                filter:contrast(2);
+                display:box;
             }
         }
     }
     .contest {
-        border: 10px dotted orange;
+        border: 10px dotted #9b9b9b;
         padding-bottom:3%;
         padding-top:3%;
         position:relative;
@@ -172,32 +179,32 @@ main{
                 top:50%;
                 left:50%;
                 transform:translate(-50%,-50%);
-                color:orange;
+                color: silver;
                 text-align:center;
                 font-size:200px;
                 filter:none;
                 z-index:1;
+                filter:contrast(0.5);
             }
         }
     }
 }
-
+ 
 footer{
     width: 100%;
     height: 25%;
     background: black;
-    margin-top:2%;    
+    margin-top:2%;  
+    div{
+        justify-content: center;
+        text-align:center;
+        align-items:center;
+        padding-top: 1%;
+        line-height: 150%;
+        color: white;  
+    }
 }
 
-footer div{
-    justify-content: center;
-    text-align:center;
-    align-items:center;
-    padding-top: 1%;
-    line-height: 150%;
-    color: white;
-    
-}
 
 #acceptcookiesdiv {
     opacity: 0.5;
