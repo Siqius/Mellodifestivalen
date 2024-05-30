@@ -20,7 +20,7 @@ html {
 ::-webkit-scrollbar { width: 12px; height: 3px;}
 ::-webkit-scrollbar-track { background: black;}
 ::-webkit-scrollbar-track-piece { background: black;}
-::-webkit-scrollbar-thumb { height: 10px; background: linear-gradient(360deg, #09aae0dd, #82509fdd, #eb3791dd, #d6098bdd, #f95a28dd, #ff9f00dd);; border-radius: 10px; border:2px solid black;}
+::-webkit-scrollbar-thumb { height: 10px; background: linear-gradient(360deg, #09aae0dd, #82509fdd, #eb3791dd, #d6098bdd, #f95a28dd, #ff9f00dd); border-radius: 10px; border:2px solid black;}
 ::-webkit-scrollbar-corner { background-color: #646464;}
 ::-webkit-resizer { background-color: #666;}
 
