@@ -6,8 +6,24 @@ var voteTimeout = false;
 var voted = false;
 var acceptedcookies = localStorage.getItem("acceptedcookies");
 var active;
-
 var timers = document.querySelectorAll(".timertext")
+
+var container = document.createElement("div");
+container.classList.add("contestvideocontainer");
+let iframe = document.createElement("iframe");
+iframe.type = "video/mp4";
+iframe.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; web-share";
+iframe.referrerPolicy = "strict-origin-when-cross-origin";
+iframe.allowFullscreen = true;
+iframe.classList.add("contestvideo");
+container.appendChild(iframe);
+let button = document.createElement("button");
+button.onclick = () => {
+    closeVideo();
+}
+button.innerHTML = "Close video";
+button.classList.add("contestvideoclose");
+container.appendChild(button);
 
 //display accept cookies option if user hasnt accepted cookies yet
 if(acceptedcookies) {
@@ -83,6 +99,7 @@ async function generateFinalists() {
         let img = document.createElement("img");
         img.src = finalist.image;
         img.classList.add("imgscroll");
+        img.classList.add(`${finalist["ID"]}`)
         imgWrapper.appendChild(img);
         let div = document.createElement("div");
 
@@ -111,7 +128,7 @@ async function generateFinalists() {
         
         let div = document.createElement("div");
         let p = document.createElement("p");
-        p.innerHTML = `artist ${count}`;
+        p.innerHTML = `artist ${count+1}`;
         p.classList.add(`p${count}`);
         p.classList.add("animationtext");
         div.appendChild(p)
@@ -134,6 +151,7 @@ async function loadContests() {
                 let img = document.createElement("img");
                 img.src = contest.image;
                 img.classList.add("imgscroll");
+                img.classList.add(`${contest["ID"]}`)
                 imgWrapper.appendChild(img);
                 
                 let div = document.createElement("div");
@@ -165,7 +183,7 @@ async function loadContests() {
             let div = document.createElement("div");
 
             let p = document.createElement("p");
-            p.innerHTML = `artist ${count}`;
+            p.innerHTML = `artist ${count+1}`;
             p.classList.add(`p${count}`);
             p.classList.add("animationtext");
             div.appendChild(p);
@@ -176,7 +194,6 @@ async function loadContests() {
     // initiate the animation
     slide = 1;
     allP = [...document.querySelectorAll(".animationtext")];
-    console.log(allP);
     allP.forEach(e => {
         e.style.filter = "blur(1px)";
         if(e.classList.contains("p0")) {
@@ -227,7 +244,6 @@ async function time() {
     let time = new Date().toLocaleTimeString().split(":");
     let minute = time[1][1];
     let seconds = time[2];
-    minute = 4;
 
     //contest 1
     if(minute <= 1) {
@@ -314,6 +330,37 @@ async function time() {
         }
         timers[3].closest(".contest").style.filter = "";
         active = 4;
+    }
+}
+
+document.addEventListener("click", (e) => {
+    if(e.target.tagName != "IMG") return;
+    let ID = e.target.classList[1];
+    let url;
+    let title;
+    allContests.forEach(e => {
+        e.forEach(contest => {
+            if(contest["ID"] == ID) {
+                url = "https://youtube.com/embed/" + contest["url"].split("=")[1].split("&")[0];
+                title = contest["songname"];
+            }
+        })
+    })
+    container.firstChild.src = url
+    container.firstChild.title = title;
+    let containerinDOM = document.querySelector(".contestvideocontainer");
+    if(containerinDOM == null) {
+        document.querySelector("body").appendChild(container);
+    }else {
+        document.querySelector("body").removeChild(containerinDOM);
+        document.querySelector("body").appendChild(container);
+    }
+})
+
+function closeVideo() {
+    let containertoclose = document.querySelector(".contestvideocontainer");
+    if(containertoclose != null) {
+        document.querySelector("body").removeChild(containertoclose);
     }
 }
 
