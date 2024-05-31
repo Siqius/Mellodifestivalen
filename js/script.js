@@ -6,7 +6,7 @@ var voteTimeout = false;
 var voted = false;
 var acceptedcookies = localStorage.getItem("acceptedcookies");
 var active;
-var timers = document.querySelectorAll(".timertext")
+var timers = document.querySelectorAll(".timertext");
 
 var container = document.createElement("div");
 container.classList.add("contestvideocontainer");

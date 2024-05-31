@@ -233,6 +233,7 @@ footer{
         height:15%;
         background: linear-gradient(90deg, #09aae0dd, #82509fdd, #eb3791dd, #d6098bdd, #f95a28dd, #ff9f00dd);
         border-radius: 0 0 50px 50px;
+        cursor:pointer;
     }
 }
 
@@ -268,7 +269,7 @@ footer{
 }
 
 .hideacceptcookies {
-    scale:0;
+    transform:scale(0);
 }
 
 @media only screen and (max-width: 600px) {
