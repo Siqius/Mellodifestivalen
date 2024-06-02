@@ -267,7 +267,7 @@ async function time() {
         timers[2].innerHTML = seconds <= 49 ? `${3 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         for(let i = 1; i < 4; i++) {
-            timers[i].closest(".contest").style.filter = "blur(5px)";
+            timers[i].closest(".contest").style.filter = "blur(2px)";
         }
         timers[0].closest(".contest").style.filter = "";
         active = 1;
@@ -289,7 +289,7 @@ async function time() {
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         for(let i = 0; i < 4; i++) {
             if(i != 1) {
-                timers[i].closest(".contest").style.filter = "blur(5px)";
+                timers[i].closest(".contest").style.filter = "blur(2px)";
             }
         }
         timers[1].closest(".contest").style.filter = "";
@@ -312,7 +312,7 @@ async function time() {
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         for(let i = 0; i < 4; i++) {
             if(i != 2) {
-                timers[i].closest(".contest").style.filter = "blur(5px)";
+                timers[i].closest(".contest").style.filter = "blur(2px)";
             }
         }
         timers[2].closest(".contest").style.filter = "";
@@ -333,7 +333,7 @@ async function time() {
         timers[2].innerHTML = seconds <= 49 ? `${13 - parseInt(minute)}:${59-parseInt(seconds)}` : `${13 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = "";
         for(let i = 0; i < 3; i++) {
-            timers[i].closest(".contest").style.filter = "blur(5px)";
+            timers[i].closest(".contest").style.filter = "blur(2px)";
         }
         timers[3].closest(".contest").style.filter = "";
         active = 4;
