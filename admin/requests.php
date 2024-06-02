@@ -195,4 +195,5 @@ if(!empty(isset($data["resetvotes"]))) {
 
     $mysqli->close();
 }
+
 ?>
