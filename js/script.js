@@ -6,8 +6,24 @@ var voteTimeout = false;
 var voted = false;
 var acceptedcookies = localStorage.getItem("acceptedcookies");
 var active;
+var timers = document.querySelectorAll(".timertext");
 
-var timers = document.querySelectorAll(".timertext")
+var container = document.createElement("div");
+container.classList.add("contestvideocontainer");
+let iframe = document.createElement("iframe");
+iframe.type = "video/mp4";
+iframe.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; web-share";
+iframe.referrerPolicy = "strict-origin-when-cross-origin";
+iframe.allowFullscreen = true;
+iframe.classList.add("contestvideo");
+container.appendChild(iframe);
+let button = document.createElement("button");
+button.onclick = () => {
+    closeVideo();
+}
+button.innerHTML = "Close video";
+button.classList.add("contestvideoclose");
+container.appendChild(button);
 
 //display accept cookies option if user hasnt accepted cookies yet
 if(acceptedcookies) {
@@ -81,8 +97,10 @@ async function generateFinalists() {
     finals.forEach(finalist => {
         if(finalist.votes == 0) {return;}
         let img = document.createElement("img");
+        img.alt = "Finalist image"
         img.src = finalist.image;
         img.classList.add("imgscroll");
+        img.classList.add(`${finalist["ID"]}`)
         imgWrapper.appendChild(img);
         let div = document.createElement("div");
 
@@ -105,13 +123,15 @@ async function generateFinalists() {
     // if finals arent filled with contestants, generate temporary ones
     for(count; count < 6; count++) {
         let img = document.createElement("img");
-        img.src = "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA5L3Jhd3BpeGVsX29mZmljZV8zNF9mbHVmZnlfY2h1YmJ5X3Bhc3RlbF9jYXRzX2thd2FpaV9hZXN0aGV0aWNfM182YTJkZjRmNS03NTZiLTQyODgtOWQ4Mi1lZmRlMmE1MTA2OWRfMS5qcGc.jpg";
+        img.innerHTML = "empty";
+        img.alt = "Empty finalist img"
+        img.src = "./assets/questionmark.png";
         img.classList.add("imgscroll");
         imgWrapper.appendChild(img);
         
         let div = document.createElement("div");
         let p = document.createElement("p");
-        p.innerHTML = `artist ${count}`;
+        p.innerHTML = `To be decided`;
         p.classList.add(`p${count}`);
         p.classList.add("animationtext");
         div.appendChild(p)
@@ -132,8 +152,10 @@ async function loadContests() {
             allContests.push(response);
             response.forEach(contest => {
                 let img = document.createElement("img");
+                img.alt = "Artist image";
                 img.src = contest.image;
                 img.classList.add("imgscroll");
+                img.classList.add(`${contest["ID"]}`)
                 imgWrapper.appendChild(img);
                 
                 let div = document.createElement("div");
@@ -158,6 +180,8 @@ async function loadContests() {
         // if all contests arent filled with contestants, generate temporary ones
         for(count; count < 6; count++) {
             let img = document.createElement("img");
+            img.innerHTML = "empty";
+            img.alt = "Empty artist image"
             img.src = "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA5L3Jhd3BpeGVsX29mZmljZV8zNF9mbHVmZnlfY2h1YmJ5X3Bhc3RlbF9jYXRzX2thd2FpaV9hZXN0aGV0aWNfM182YTJkZjRmNS03NTZiLTQyODgtOWQ4Mi1lZmRlMmE1MTA2OWRfMS5qcGc.jpg";
             img.classList.add("imgscroll");
             imgWrapper.appendChild(img);
@@ -165,7 +189,7 @@ async function loadContests() {
             let div = document.createElement("div");
 
             let p = document.createElement("p");
-            p.innerHTML = `artist ${count}`;
+            p.innerHTML = `artist ${count+1}`;
             p.classList.add(`p${count}`);
             p.classList.add("animationtext");
             div.appendChild(p);
@@ -176,7 +200,6 @@ async function loadContests() {
     // initiate the animation
     slide = 1;
     allP = [...document.querySelectorAll(".animationtext")];
-    console.log(allP);
     allP.forEach(e => {
         e.style.filter = "blur(1px)";
         if(e.classList.contains("p0")) {
@@ -224,10 +247,10 @@ function denycookies() {
 
 async function time() {
     // get local time
-    let time = new Date().toLocaleTimeString().split(":");
+    let time = new Date().toLocaleTimeString().replace(/AM|PM/,'') .split(":");
     let minute = time[1][1];
     let seconds = time[2];
-    minute = 4;
+    console.log(minute,":",seconds)
 
     //contest 1
     if(minute <= 1) {
@@ -244,7 +267,7 @@ async function time() {
         timers[2].innerHTML = seconds <= 49 ? `${3 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         for(let i = 1; i < 4; i++) {
-            timers[i].closest(".contest").style.filter = "blur(5px)";
+            timers[i].closest(".contest").style.filter = "blur(2px)";
         }
         timers[0].closest(".contest").style.filter = "";
         active = 1;
@@ -266,7 +289,7 @@ async function time() {
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         for(let i = 0; i < 4; i++) {
             if(i != 1) {
-                timers[i].closest(".contest").style.filter = "blur(5px)";
+                timers[i].closest(".contest").style.filter = "blur(2px)";
             }
         }
         timers[1].closest(".contest").style.filter = "";
@@ -289,7 +312,7 @@ async function time() {
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         for(let i = 0; i < 4; i++) {
             if(i != 2) {
-                timers[i].closest(".contest").style.filter = "blur(5px)";
+                timers[i].closest(".contest").style.filter = "blur(2px)";
             }
         }
         timers[2].closest(".contest").style.filter = "";
@@ -310,10 +333,44 @@ async function time() {
         timers[2].innerHTML = seconds <= 49 ? `${13 - parseInt(minute)}:${59-parseInt(seconds)}` : `${13 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = "";
         for(let i = 0; i < 3; i++) {
-            timers[i].closest(".contest").style.filter = "blur(5px)";
+            timers[i].closest(".contest").style.filter = "blur(2px)";
         }
         timers[3].closest(".contest").style.filter = "";
         active = 4;
+    }
+}
+
+document.addEventListener("click", (e) => {
+    if(e.target.tagName != "IMG") return;
+    let ID = e.target.classList[1];
+    let url;
+    let songname;
+    let name;
+    allContests.forEach(e => {
+        e.forEach(contest => {
+            if(contest["ID"] == ID) {
+                url = "https://youtube.com/embed/" + contest["url"].split("=")[1].split("&")[0];
+                songname = contest["songname"];
+                name = contest["artistname"];
+            }
+        })
+    })
+    container.firstChild.src = url;
+    container.firstChild.title = songname;
+    container.firstChild.alt = `Song performance video`;
+    let containerinDOM = document.querySelector(".contestvideocontainer");
+    if(containerinDOM == null) {
+        document.querySelector("body").appendChild(container);
+    }else {
+        document.querySelector("body").removeChild(containerinDOM);
+        document.querySelector("body").appendChild(container);
+    }
+})
+
+function closeVideo() {
+    let containertoclose = document.querySelector(".contestvideocontainer");
+    if(containertoclose != null) {
+        document.querySelector("body").removeChild(containertoclose);
     }
 }
 
