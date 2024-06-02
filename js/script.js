@@ -97,6 +97,7 @@ async function generateFinalists() {
     finals.forEach(finalist => {
         if(finalist.votes == 0) {return;}
         let img = document.createElement("img");
+        img.alt = "Finalist image"
         img.src = finalist.image;
         img.classList.add("imgscroll");
         img.classList.add(`${finalist["ID"]}`)
@@ -122,13 +123,15 @@ async function generateFinalists() {
     // if finals arent filled with contestants, generate temporary ones
     for(count; count < 6; count++) {
         let img = document.createElement("img");
-        img.src = "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA5L3Jhd3BpeGVsX29mZmljZV8zNF9mbHVmZnlfY2h1YmJ5X3Bhc3RlbF9jYXRzX2thd2FpaV9hZXN0aGV0aWNfM182YTJkZjRmNS03NTZiLTQyODgtOWQ4Mi1lZmRlMmE1MTA2OWRfMS5qcGc.jpg";
+        img.innerHTML = "empty";
+        img.alt = "Empty finalist img"
+        img.src = "./assets/questionmark.png";
         img.classList.add("imgscroll");
         imgWrapper.appendChild(img);
         
         let div = document.createElement("div");
         let p = document.createElement("p");
-        p.innerHTML = `artist ${count+1}`;
+        p.innerHTML = `To be decided`;
         p.classList.add(`p${count}`);
         p.classList.add("animationtext");
         div.appendChild(p)
@@ -149,6 +152,7 @@ async function loadContests() {
             allContests.push(response);
             response.forEach(contest => {
                 let img = document.createElement("img");
+                img.alt = "Artist image";
                 img.src = contest.image;
                 img.classList.add("imgscroll");
                 img.classList.add(`${contest["ID"]}`)
@@ -176,6 +180,8 @@ async function loadContests() {
         // if all contests arent filled with contestants, generate temporary ones
         for(count; count < 6; count++) {
             let img = document.createElement("img");
+            img.innerHTML = "empty";
+            img.alt = "Empty artist image"
             img.src = "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA5L3Jhd3BpeGVsX29mZmljZV8zNF9mbHVmZnlfY2h1YmJ5X3Bhc3RlbF9jYXRzX2thd2FpaV9hZXN0aGV0aWNfM182YTJkZjRmNS03NTZiLTQyODgtOWQ4Mi1lZmRlMmE1MTA2OWRfMS5qcGc.jpg";
             img.classList.add("imgscroll");
             imgWrapper.appendChild(img);
@@ -241,9 +247,10 @@ function denycookies() {
 
 async function time() {
     // get local time
-    let time = new Date().toLocaleTimeString().split(":");
+    let time = new Date().toLocaleTimeString().replace(/AM|PM/,'') .split(":");
     let minute = time[1][1];
     let seconds = time[2];
+    console.log(minute,":",seconds)
 
     //contest 1
     if(minute <= 1) {
@@ -337,17 +344,20 @@ document.addEventListener("click", (e) => {
     if(e.target.tagName != "IMG") return;
     let ID = e.target.classList[1];
     let url;
-    let title;
+    let songname;
+    let name;
     allContests.forEach(e => {
         e.forEach(contest => {
             if(contest["ID"] == ID) {
                 url = "https://youtube.com/embed/" + contest["url"].split("=")[1].split("&")[0];
-                title = contest["songname"];
+                songname = contest["songname"];
+                name = contest["artistname"];
             }
         })
     })
-    container.firstChild.src = url
-    container.firstChild.title = title;
+    container.firstChild.src = url;
+    container.firstChild.title = songname;
+    container.firstChild.alt = `Song performance video`;
     let containerinDOM = document.querySelector(".contestvideocontainer");
     if(containerinDOM == null) {
         document.querySelector("body").appendChild(container);
