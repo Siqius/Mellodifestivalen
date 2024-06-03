@@ -123,7 +123,6 @@ async function generateFinalists() {
     // if finals arent filled with contestants, generate temporary ones
     for(count; count < 6; count++) {
         let img = document.createElement("img");
-        img.innerHTML = "empty";
         img.alt = "Empty finalist img"
         img.src = "./assets/questionmark.png";
         img.classList.add("imgscroll");
@@ -180,7 +179,6 @@ async function loadContests() {
         // if all contests arent filled with contestants, generate temporary ones
         for(count; count < 6; count++) {
             let img = document.createElement("img");
-            img.innerHTML = "empty";
             img.alt = "Empty artist image"
             img.src = "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA5L3Jhd3BpeGVsX29mZmljZV8zNF9mbHVmZnlfY2h1YmJ5X3Bhc3RlbF9jYXRzX2thd2FpaV9hZXN0aGV0aWNfM182YTJkZjRmNS03NTZiLTQyODgtOWQ4Mi1lZmRlMmE1MTA2OWRfMS5qcGc.jpg";
             img.classList.add("imgscroll");
@@ -250,15 +248,14 @@ async function time() {
     let time = new Date().toLocaleTimeString().replace(/AM|PM/,'') .split(":");
     let minute = time[1][1];
     let seconds = time[2];
-    console.log(minute,":",seconds)
 
     //contest 1
     if(minute <= 1) {
         // reset vote on new contest
-        if(minute == 0 && seconds == 0 && localStorage.getItem("acceptedcookies")) {
+        if(minute == 0 && seconds == 0 && localStorage.getItem("acceptedcookies") == "true") {
             localStorage.setItem("voted", false);
             let response = await fetchData("./admin/handlerequests.php/", {"resetvotes":true});
-            generateFinalists();
+            await generateFinalists();
         }
         
         //set timers for each contest and store the active contest
@@ -276,9 +273,9 @@ async function time() {
     //contest 2
     else if(minute <= 3) {
         // reset vote on new contest
-        if(minute == 2 && seconds == 0 && localStorage.getItem("acceptedcookies")) {
+        if(minute == 2 && seconds == 0 && localStorage.getItem("acceptedcookies") == "true") {
             localStorage.setItem("voted", false);
-            generateFinalists();
+            await generateFinalists();
         }
 
         //set timers for each contest and store the active contest
@@ -299,9 +296,9 @@ async function time() {
     //contest 3
     else if(minute <= 5) {
         // reset vote on new contest
-        if(minute == 4 && seconds == 0 && localStorage.getItem("acceptedcookies")) {
+        if(minute == 4 && seconds == 0 && localStorage.getItem("acceptedcookies") == "true") {
             localStorage.setItem("voted", false);
-            generateFinalists();
+            await generateFinalists();
         }
         
         //set timers for each contest and store the active contest
@@ -322,9 +319,9 @@ async function time() {
     //contest 4 (finals)
     else {
         // reset vote on new contest
-        if(minute == 6 && seconds == 0 && localStorage.getItem("acceptedcookies")) {
+        if(minute == 6 && seconds == 0 && localStorage.getItem("acceptedcookies") == "true") {
             localStorage.setItem("voted", false);
-            generateFinalists();
+            await generateFinalists();
         }
         
         //set timers for each contest and store the active contest
@@ -342,6 +339,7 @@ async function time() {
 
 document.addEventListener("click", (e) => {
     if(e.target.tagName != "IMG") return;
+    if(e.target.alt.split(" ")[0] == "Empty") return;
     let ID = e.target.classList[1];
     let url;
     let songname;
@@ -376,6 +374,7 @@ function closeVideo() {
 
 //animate the artist text and artist images
 function animate() {
+    allP = [...document.querySelectorAll(".animationtext")];
     allP.forEach(e => {
         e.style.transform = "scale(0.8)";
         e.style.filter = "blur(1px)";
