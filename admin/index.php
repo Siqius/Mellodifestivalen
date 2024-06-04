@@ -12,7 +12,7 @@ $mysql_database = "melodifestivalen";
 $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 if(strpos($url, 'afa-mello')) {
-    include './credentials.php';
+    include '../credentials.php';
 }
 
 if(!empty(isset($_POST["user"]))) {

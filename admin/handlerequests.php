@@ -9,7 +9,7 @@ $url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_
 
 //if server is running on website, import correct credentials
 if(strpos($url, 'afa-mello')) {
-    include './credentials.php';
+    include '../credentials.php';
 }
 
 $data = $_POST;
