@@ -264,9 +264,9 @@ async function time() {
         timers[2].innerHTML = seconds <= 49 ? `${3 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         for(let i = 1; i < 4; i++) {
-            timers[i].closest(".contest").style.filter = "blur(2px)";
+            timers[i].closest(".contest").style.filter = "brightness(0.7)";
         }
-        timers[0].closest(".contest").style.filter = "";
+        timers[0].closest(".contest").style.filter = "brightness(1)";
         active = 1;
     }
 
@@ -281,15 +281,14 @@ async function time() {
         //set timers for each contest and store the active contest
         timers[0].innerHTML = seconds <= 49 ? `${9 - parseInt(minute)}:${59-parseInt(seconds)}` : `${9 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[1].innerHTML = "";
-        timers[1].closest(".contest").style.filter = "blur(5px)";
         timers[2].innerHTML = seconds <= 49 ? `${3 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         for(let i = 0; i < 4; i++) {
             if(i != 1) {
-                timers[i].closest(".contest").style.filter = "blur(2px)";
+                timers[i].closest(".contest").style.filter = "brightness(0.7)";
             }
         }
-        timers[1].closest(".contest").style.filter = "";
+        timers[1].closest(".contest").style.filter = "brightness(1)";
         active = 2;
     }
 
@@ -305,14 +304,13 @@ async function time() {
         timers[0].innerHTML = seconds <= 49 ? `${9 - parseInt(minute)}:${59-parseInt(seconds)}` : `${9 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[1].innerHTML = seconds <= 49 ? `${11 - parseInt(minute)}:${59-parseInt(seconds)}` : `${11 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[2].innerHTML = "";
-        timers[2].closest(".contest").style.filter = "blur(5px)";
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         for(let i = 0; i < 4; i++) {
             if(i != 2) {
-                timers[i].closest(".contest").style.filter = "blur(2px)";
+                timers[i].closest(".contest").style.filter = "brightness(0.7)";
             }
         }
-        timers[2].closest(".contest").style.filter = "";
+        timers[2].closest(".contest").style.filter = "brightness(1)";
         active = 3;
     }
 
@@ -330,9 +328,9 @@ async function time() {
         timers[2].innerHTML = seconds <= 49 ? `${13 - parseInt(minute)}:${59-parseInt(seconds)}` : `${13 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = "";
         for(let i = 0; i < 3; i++) {
-            timers[i].closest(".contest").style.filter = "blur(2px)";
+            timers[i].closest(".contest").style.filter = "brightness(0.7)";
         }
-        timers[3].closest(".contest").style.filter = "";
+        timers[3].closest(".contest").style.filter = "brighness(1)";
         active = 4;
     }
 }
@@ -340,6 +338,7 @@ async function time() {
 document.addEventListener("click", (e) => {
     if(e.target.tagName != "IMG") return;
     if(e.target.alt.split(" ")[0] == "Empty") return;
+    if(e.target.alt.split(" ")[0] == "Mello") return;
     let ID = e.target.classList[1];
     let url;
     let songname;
