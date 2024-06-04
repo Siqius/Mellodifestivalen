@@ -256,11 +256,6 @@ async function time() {
             localStorage.setItem("voted", false);
             let response = await fetchData("./admin/handlerequests.php/", {"resetvotes":true});
             await generateFinalists();
-            for(let i = 1; i < 4; i++) {
-                timers[i].closest(".contest").style.filter = "brightness(0.3)";
-            }
-            timers[0].closest(".contest").style.filter = "brightness(1)";
-            active = 1;
         }
         
         //set timers for each contest and store the active contest
@@ -268,6 +263,11 @@ async function time() {
         timers[1].innerHTML = seconds <= 49 ? `${1 - parseInt(minute)}:${59-parseInt(seconds)}` : `${1 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[2].innerHTML = seconds <= 49 ? `${3 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        for(let i = 1; i < 4; i++) {
+            timers[i].closest(".contest").style.filter = "brightness(0.3)";
+        }
+        timers[0].closest(".contest").style.filter = "brightness(1)";
+        active = 1;
     }
 
     //contest 2
@@ -276,18 +276,18 @@ async function time() {
         if(minute == 2 && seconds == 0 && localStorage.getItem("acceptedcookies") == "true") {
             localStorage.setItem("voted", false);
             await generateFinalists();
-            for(let i = 0; i < 4; i++) {
-                timers[i].closest(".contest").style.filter = "brightness(0.3)";
-            }
-            timers[1].closest(".contest").style.filter = "brightness(1)";
-            active = 2;
         }
-
+        
         //set timers for each contest and store the active contest
         timers[0].innerHTML = seconds <= 49 ? `${9 - parseInt(minute)}:${59-parseInt(seconds)}` : `${9 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[1].innerHTML = "";
         timers[2].innerHTML = seconds <= 49 ? `${3 - parseInt(minute)}:${59-parseInt(seconds)}` : `${3 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        for(let i = 0; i < 4; i++) {
+            timers[i].closest(".contest").style.filter = "brightness(0.3)";
+        }
+        timers[1].closest(".contest").style.filter = "brightness(1)";
+        active = 2;
     }
 
     //contest 3
@@ -296,11 +296,6 @@ async function time() {
         if(minute == 4 && seconds == 0 && localStorage.getItem("acceptedcookies") == "true") {
             localStorage.setItem("voted", false);
             await generateFinalists();
-            for(let i = 0; i < 4; i++) {
-                timers[i].closest(".contest").style.filter = "brightness(0.3)";
-            }
-            timers[2].closest(".contest").style.filter = "brightness(1)";
-            active = 3;
         }
         
         //set timers for each contest and store the active contest
@@ -308,6 +303,11 @@ async function time() {
         timers[1].innerHTML = seconds <= 49 ? `${11 - parseInt(minute)}:${59-parseInt(seconds)}` : `${11 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[2].innerHTML = "";
         timers[3].innerHTML = seconds <= 49 ? `${5 - parseInt(minute)}:${59-parseInt(seconds)}` : `${5 - parseInt(minute)}:0${59-parseInt(seconds)}`;
+        for(let i = 0; i < 4; i++) {
+            timers[i].closest(".contest").style.filter = "brightness(0.3)";
+        }
+        timers[2].closest(".contest").style.filter = "brightness(1)";
+        active = 3;
     }
 
     //contest 4 (finals)
@@ -316,11 +316,6 @@ async function time() {
         if(minute == 6 && seconds == 0 && localStorage.getItem("acceptedcookies") == "true") {
             localStorage.setItem("voted", false);
             await generateFinalists();
-            for(let i = 0; i < 3; i++) {
-                timers[i].closest(".contest").style.filter = "brightness(0.3)";
-            }
-            timers[3].closest(".contest").style.filter = "brightness(1)";
-            active = 4;
         }
         
         //set timers for each contest and store the active contest
@@ -328,6 +323,11 @@ async function time() {
         timers[1].innerHTML = seconds <= 49 ? `${11 - parseInt(minute)}:${59-parseInt(seconds)}` : `${11 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[2].innerHTML = seconds <= 49 ? `${13 - parseInt(minute)}:${59-parseInt(seconds)}` : `${13 - parseInt(minute)}:0${59-parseInt(seconds)}`;
         timers[3].innerHTML = "";
+        for(let i = 0; i < 3; i++) {
+            timers[i].closest(".contest").style.filter = "brightness(0.3)";
+        }
+        timers[3].closest(".contest").style.filter = "brightness(1)";
+        active = 4;
     }
 }
 
